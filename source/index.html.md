@@ -122,22 +122,22 @@ curl -H "X-Requested-With: XMLHttpRequest" \
     "impressions":0,
     "publisher_revenue": 0.0,
     "ssp_platform_ecpm": null,
-    "exchange_rate_markup":0.0, 
-    "blank_impressions":0, 
-    "publisher_ecpm":null, 
-    "kept_impressions":0, 
-    "resold_impressions":0, 
-    "ssp_platform_profit":0.0, 
-    "fill_rate":null, 
-    "trade_logs":0, 
-    "amount":0.0, 
-    "ssp_platform_revenue":0.0, 
-    "default_impressions":0, 
-    "clicks":0, 
-    "ctr":null, 
-    "seller_revenue_share":0.0, 
-    "requests":0, 
-    "ssp_platform_ecpc":null, 
+    "exchange_rate_markup":0.0,
+    "blank_impressions":0,
+    "publisher_ecpm":null,
+    "kept_impressions":0,
+    "resold_impressions":0,
+    "ssp_platform_profit":0.0,
+    "fill_rate":null,
+    "trade_logs":0,
+    "amount":0.0,
+    "ssp_platform_revenue":0.0,
+    "default_impressions":0,
+    "clicks":0,
+    "ctr":null,
+    "seller_revenue_share":0.0,
+    "requests":0,
+    "ssp_platform_ecpc":null,
     "publisher_ecpc":null
   },
   "meta": { "total": 1 }
@@ -597,8 +597,8 @@ publisher_id | true | None |
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
      -H "x-access-token: TOKEN" \
-     -X POST
-     --data "placement[name]=name"
+     -X POST \
+     --data "placement[name]=name" \
      http://HOST/api/publishers/:publisher_id/placement_groups/:placment_group_id/placements
 ```
 
@@ -796,3 +796,395 @@ state | false | ENUM | 0 - ACTIVE, 2 - DELETED
 url | false | string |
 description | false | string |
 universal_categories | false | string | json hash
+
+# Reports
+
+## Get Recent Reports
+
+> Example Request:
+
+```shell
+curl -H "X-Requested-With: XMLHttpRequest" \
+     -H "x-access-token: TOKEN" \
+    http://HOST/api/report_requests/recent_list
+```
+
+> Example Response:
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "name",
+      "range_type": "custom",
+      "start_at": 1486101729,
+      "end_at": 1486102729,
+      "publisher_id": 2,
+      "generate_status": "processing",
+      "regular_report_frequency": "daily",
+      "report_request_status": "enabled",
+      "tz_name": "Europe/London"
+    }
+  ],
+  "meta": { "total": 1 }
+}
+```
+
+### HTTP Request
+`GET http://HOST/api/report_requests/recent_list`
+
+### Query Parameters
+
+Parameter    | Required | Default | Type |  Description
+------------ | -------- | ------- | ---- |  -----------
+limit | false | 25 | int | limit per page
+offset | false | 0 | int | if offset is set to N, first N records will be ignored
+order | false | None | string | e.g.: name,desc, type,asc. supported ordering fields: id, name, type, publisher_id, report_type, range_type, start_at, end_at, interval, currency, filter_type, show_type, export_format, export_email, regular_export_format, regular_export_email, regular_report_frequency, generated_at, summary, generate_status, created_at, updated_at, send_at, is_rerun, creator_id
+
+## Get Scheduled Reports
+
+> Example Request:
+
+```shell
+curl -H "X-Requested-With: XMLHttpRequest" \
+     -H "x-access-token: TOKEN" \
+    http://HOST/api/report_requests/schedule_list
+```
+
+> Example Response:
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "name",
+      "range_type": "custom",
+      "start_at": 1486101729,
+      "end_at": 1486102729,
+      "publisher_id": 2,
+      "generate_status": "processing",
+      "regular_report_frequency": "daily",
+      "report_request_status": "enabled",
+      "tz_name": "Europe/London"
+    }
+  ],
+  "meta": { "total": 1 }
+}
+```
+
+### HTTP Request
+`GET http://HOST/api/report_requests/schedule_list`
+
+### Query Parameters
+
+Parameter    | Required | Default | Type |  Description
+------------ | -------- | ------- | ---- |  -----------
+limit | false | 25 | int | limit per page
+offset | false | 0 | int | if offset is set to N, first N records will be ignored
+order | false | None | string | e.g.: name,desc, type,asc. supported ordering fields: id, name, type, publisher_id, report_type, range_type, start_at, end_at, interval, currency, filter_type, show_type, export_format, export_email, regular_export_format, regular_export_email, regular_report_frequency, generated_at, summary, generate_status, created_at, updated_at, send_at, is_rerun, creator_id
+
+## Get a Specific Report
+
+> Example Request:
+
+```shell
+curl -H "X-Requested-With: XMLHttpRequest" \
+     -H "x-access-token: TOKEN" \
+    http://HOST/api/report_requests/:id
+```
+
+> Example Response:
+```json
+{
+  "id": 1,
+  "name": "name",
+  "range_type": "yesterday",
+  "start_at": 1486104005,
+  "end_at": 1486104905,
+  "publisher_id": 2,
+  "generate_status": "processing",
+  "type": "ScheduleReport",
+  "show_type": "email",
+  "interval": "summation",
+  "currency": "USD",
+  "export_format": "csv",
+  "export_email": "recipient@mail.com",
+  "regular_export_format": "recipient@mail.com",
+  "regular_report_frequency": "daily",
+  "placement_ids": [1, 2, 3],
+  "placement_group_ids": [1],
+  "placement_data": [{ "id": 1, "name": "hmm" }, { "id": 2, "name": "hmm" }, { "id": 3, "name": "hmm" }],
+  "placement_group_data": [{ "id": 1, "name": "hmm" }],
+  "timezone": {
+    "id": 1,
+    "short": "Europe/London",
+    "long": "(UTC+00) Europe/London",
+    "system": "Europe/London",
+    "utc_offset": 0
+  },
+  "scheduled": true,
+  "has_name": true,
+  "filter_type": "filter_by_publisher",
+  "selected_ids": [1]
+}
+```
+
+### HTTP Request
+`GET http://HOST/api/report_requests/:id`
+
+### Query Parameters
+
+Parameter | Required | Default | Description
+--------- | -------- | ------- | -----------
+id | true | None |
+
+## Get the Review of a Specific Report
+
+> Example Request:
+
+```shell
+curl -H "X-Requested-With: XMLHttpRequest" \
+     -H "x-access-token: TOKEN" \
+    http://HOST/api/report_requests/:id/review
+```
+
+> Example Response:
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "name",
+      "range_type": "yesterday",
+      "start_at": 1486104005,
+      "end_at": 1486104905,
+      "publisher_id": 2,
+      "generate_status": "processing"
+    }
+  ],
+  "meta": {
+    "summary": { "clicks": 12 },
+    "currency": "USD",
+    "timezone": {
+      "id": 1,
+      "short": "Europe/London",
+      "long": "(UTC+00) Europe/London",
+      "system": "Europe/London",
+      "utc_offset": 0
+    },
+    "report_name": "report_name",
+    "columns": ["clicks"],
+    "total": 1
+  }
+}
+```
+
+> If you prefer a xlsx file:
+
+```shell
+curl -H "X-Requested-With: XMLHttpRequest" \
+     -H "x-access-token: TOKEN" \
+    http://HOST/api/report_requests/:id/review?format=xlsx
+```
+
+### HTTP Request
+`GET http://HOST/api/report_requests/:id/review`
+
+### Query Parameters
+
+Parameter | Required | Default | Description
+--------- | -------- | ------- | -----------
+id | true | None |
+
+## Create a New Report
+
+> Example Request:
+
+```shell
+curl -H "X-Requested-With: XMLHttpRequest" \
+     -H "x-access-token: TOKEN" \
+    -X POST \
+    --data "report_reqeust[name]=name" \
+    http://HOST/api/report_requests
+```
+
+> Example Response:
+```js
+// Status code 201
+```
+
+### HTTP Request
+
+`POST http://HOST/api/report_requests`
+
+### Query Parameters
+
+Parameter | Required| Type | Description
+--------- | ------- | ---- | -----------
+report_request | true    | ReportRequestDAO
+
+#### ReportRequestDAO
+Key | Required | Type | Description
+--- | ----- | --- | ---
+publisher_id | true | int |
+range_type | true | string | supported values: 'custom', 'today', 'yesterday', 'this_month', 'last_month'. "start_at" and "end_at" are required only when the "range_type" is set to "custom"
+currency | true | string | support: USD,CNY,JPY,TWD,HKD
+timezone_id | true | int | support: please check out [timezone mapping](#timezone_mappings)
+export_format | true | string | supported: "excel", "csv"
+regular_export_format | true | string | supported: "regular_excel", "regular_csv"
+regular_report_frequency | true | string | supported: "daily", "weekly", "monthly"
+has_name | false | string | when it is set, the report to be craeted will adopt the value of "name" field
+name | false | string | name of the report, it is required when "has_name" is set
+filter_type | false | string | supported: "filter_by_publisher", "filter_by_placement", "filter_by_placement_group"
+placement_ids | false | string | if you have multi ids, separtate them with ",", e.g.: "1,2,3"
+placement_group_ids | false | string | if you have multi ids, separtate them with ",", e.g.: "1,2,3"
+scheduled | false | string | set it to "1" if you'd like to create a scheduled report
+regular_export_email | false | string | email address, it is required only when "scheduled" is set to "1"
+show_type | false | string | supported values: "screen" and "email". By default, it is "screen", when it is set to "email" , "export_email" will become required
+export_email | false | string | email address, it is required when "show_type" is set to "email"
+start_at | false | int | timestamp in seconds. required only when "range_type" is set to "custom"
+end_at | false | int | timestamp in seconds. required only when "range_type" is set to "custom"
+interval | false | string | supported values: "summation", "hour", "day", "month". By default, it is "summation"
+
+## Update a Specific Report
+
+> Example Request:
+
+```shell
+curl -H "X-Requested-With: XMLHttpRequest" \
+     -H "x-access-token: TOKEN" \
+    -X PUT \
+    --data "report_reqeust[name]=name" \
+    http://HOST/api/report_requests/:id
+```
+
+> Example Response:
+```js
+// Status code 204
+```
+
+### HTTP Request
+
+`PUT http://HOST/api/report_requests/:id`
+
+### Query Parameters
+
+Parameter | Required| Type | Description
+--------- | ------- | ---- | -----------
+report_request | true    | ReportRequestDAO
+
+#### ReportRequestDAO
+Key | Required | Type | Description
+--- | ----- | --- | ---
+publisher_id | true | int |
+range_type | true | string | supported values: 'custom', 'today', 'yesterday', 'this_month', 'last_month'. "start_at" and "end_at" are required only when the "range_type" is set to "custom"
+currency | true | string | support: USD,CNY,JPY,TWD,HKD
+timezone_id | true | int | support: please check out [timezone mapping](#timezone_mappings)
+export_format | true | string | supported: "excel", "csv"
+regular_export_format | true | string | supported: "regular_excel", "regular_csv"
+regular_report_frequency | true | string | supported: "daily", "weekly", "monthly"
+has_name | false | string | when it is set, the report to be craeted will adopt the value of "name" field
+name | false | string | name of the report, it is required when "has_name" is set
+filter_type | false | string | supported: "filter_by_publisher", "filter_by_placement", "filter_by_placement_group"
+placement_ids | false | string | if you have multi ids, separtate them with ",", e.g.: "1,2,3"
+placement_group_ids | false | string | if you have multi ids, separtate them with ",", e.g.: "1,2,3"
+scheduled | false | string | set it to "1" if you'd like to create a scheduled report
+regular_export_email | false | string | email address, it is required only when "scheduled" is set to "1"
+show_type | false | string | supported values: "screen" and "email". By default, it is "screen", when it is set to "email" , "export_email" will become required
+export_email | false | string | email address, it is required when "show_type" is set to "email"
+start_at | false | int | timestamp in seconds. required only when "range_type" is set to "custom"
+end_at | false | int | timestamp in seconds. required only when "range_type" is set to "custom"
+interval | false | string | supported values: "summation", "hour", "day", "month". By default, it is "summation"
+
+## Delete a Specific Report
+
+> Example Request:
+
+```shell
+curl -H "X-Requested-With: XMLHttpRequest" \
+     -H "x-access-token: TOKEN" \
+    -X DELETE \
+    http://HOST/api/report_requests/:id
+```
+
+> Example Response:
+```js
+// Status code 204
+```
+
+### HTTP Request
+
+`DELETE http://HOST/api/report_requests/:id`
+
+### Query Parameters
+
+Parameter | Required| Type | Description
+--------- | ------- | ---- | -----------
+id | true | int |
+
+## Rerun a Specific Report
+
+> Example Request:
+
+```shell
+curl -H "X-Requested-With: XMLHttpRequest" \
+     -H "x-access-token: TOKEN" \
+    -X POST \
+    http://HOST/api/report_requests/:id/rerun
+```
+
+> Example Response:
+```js
+// Status code 201
+```
+
+### HTTP Request
+
+`POST http://HOST/api/report_requests/:id/rerun`
+
+### Query Parameters
+
+Parameter | Required| Type | Description
+--------- | ------- | ---- | -----------
+id | true | int |
+
+# Timezone Mappings
+<a name="timezone_mappings"></a>
+
+ID | Name
+--- | -----
+1 | Europe/London
+2 | GMT
+3 | Europe/Berlin
+4 | Asia/Jerusalem
+6 | Europe/Moscow
+7 | Asia/Dubai
+11 | Indian/Maldives
+12 | Asia/Dhaka
+15 | Asia/Bangkok
+16 | Asia/Ho Chi Minh
+17 | Asia/Jakarta
+18 | Asia/Hong Kong
+19 | Asia/Macau
+20 | Asia/Beijing
+21 | Asia/Singapore
+22 | Asia/Taipei
+24 | Asia/Seoul
+25 | Asia/Tokyo
+27 | Asia/Magadan
+28 | Australia/Sydney
+29 | Asia/Sakhalin
+30 | America/Scoresbysund
+31 | Atlantic/South Georgia
+32 | America/Argentina/Buenos Aires
+35 | America/Halifax
+36 | America/New York
+37 | US/Eastern
+38 | America/Chicago
+39 | US/Central
+40 | America/Denver
+41 | US/Mountain
+42 | America/Los Angeles
+43 | US/Pacific
+44 | America/Juneau
+45 | US/Hawaii
