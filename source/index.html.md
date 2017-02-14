@@ -568,27 +568,98 @@ id | true | None |
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
      -H "x-access-token: TOKEN" \
-     http://HOST/api/publishers/:publisher_id/placement_groups
+     http://HOST/api/publishers/:publisher_id/placement_groups/:placement_group_id/placements
 ```
 
 > Example Response:
 
 ```json
 {
-  "placement_id": "1_2",
-  "tag": "<div id=\"1_2\"></div><script>code here</script>"
+  "data": [
+    {
+      "publisher_state":0,
+      "impressions":0,
+      "publisher_revenue":0.0,
+      "ssp_platform_ecpm":null,
+      "placements_count":4,
+      "exchange_rate_markup":0.0,
+      "blank_impressions":0,
+      "publisher_ecpm":null,
+      "kept_impressions":0,
+      "resold_impressions":0,
+      "ssp_platform_profit":0.0,
+      "fill_rate":null,
+      "publisher_id":"7",
+      "placement_group_id":"13",
+      "trade_logs":0,
+      "amount":0.0,
+      "ssp_platform_revenue":0.0,
+      "default_impressions":0,
+      "interval":"2017-01-24T16:00:00.000Z/2017-01-25T03:00:00.000Z",
+      "start_at":1485273600000,
+      "clicks":0,
+      "created_at":1477029059253,
+      "ctr":null,
+      "placement_state":0,
+      "publisher_name":"test 2",
+      "seller_revenue_share":0.0,
+      "requests":0,
+      "ssp_platform_ecpc":null,
+      "end_at":1485313200000,
+      "publisher_ecpc":null,
+      "placement_id":"63",
+      "placement_name":"test_placement"
+    }
+  ],
+  "summary": {
+    "impressions":0,
+    "publisher_revenue":0.0,
+    "ssp_platform_ecpm":null,
+    "exchange_rate_markup":0.0,
+    "blank_impressions":0,
+    "publisher_ecpm":null,
+    "kept_impressions":0,
+    "resold_impressions":0,
+    "ssp_platform_profit":0.0,
+    "fill_rate":null,
+    "trade_logs":0,
+    "amount":0.0,
+    "ssp_platform_revenue":0.0,
+    "default_impressions":0,
+    "clicks":0,
+    "ctr":null,
+    "seller_revenue_share":0.0,
+    "requests":0,
+    "ssp_platform_ecpc":null,
+    "publisher_ecpc":null
+  },
+  "meta": { "total": 1 }
 }
 ```
 
 ### HTTP Request
-`GET http://HOST/api/publishers/:publisher_id/placements/:id/export_tag`
+
+`GET http://HOST/api/publishers/:publisher_id/placement_groups/:placement_group_id/placements`
 
 ### Query Parameters
 
-Parameter | Required | Default | Description
---------- | -------- | ------- | -----------
-id | true | None |
-publisher_id | true | None |
+Key | Required | Default | Type | Description
+----| -------- | ------- | ---  | -------------
+publisher_id | true | None | string | ID of Publisher
+platform_id | true | 0 | string | ID of platform, also known as 'SSP Id'
+placement_group_id | true | None | string | ID of Placement Groups
+placement_ids | false | None | string | ID of Placements
+state | false | 0 | string | states, eg: 0,1,2
+keyword | false | None | string | keyword for Placement name
+start_at | false | 0 | string | Start At, unix timestamp at milliseconds
+end_at | false | None | string | End At, unix timestamp at milliseconds
+order | false | placement_ids,desc;start_at,desc | string | Order. eg: requests,desc;ctr,asc. supported ordering fields: "start_at", "requests", "clicks", "impressions", "effective_impressions", "blank_impressions", "default_impressions", "psa_impressions", "kept_impressions", "resold_impressions", "rtb_impressions", "external_impression_impressions", "external_click_impressions", "cpm_bids", "cpc_bids", "cpa_bids", "amount", "exchange_rate_markup", "seller_revenue_share", "Placement_revenue", "ssp_platform_revenue", "ssp_platform_profit", "fill_rate", "ctr", "Placement_ecpm", "Placement_ecpc", "ssp_platform_ecpm", "ssp_platform_ecpc", "placement_id", "placement_group_id", "placement_name", "placement_state", "placements_count", "placement_created_at"
+interval | false | summation | string | Interval
+include_empty_row | false | 0 | long | 0 for false, 1 for true
+offset | false | 0 | long | Offset
+limit | false | 25 | long | Limit
+currency | false | JPY | string | Currency. Support: USD,CNY,JPY,TWD,HKD
+timezone | false | Asia/Shanghai | string | Timezone, eg: Asia/Shanghai
 
 ## Create a Placement
 
