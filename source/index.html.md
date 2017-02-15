@@ -530,7 +530,10 @@ cpm_price | false | float |
 width | false |integer |
 height | false | integer |
 size | false | string | 200x100 . it is required for placements whose media type is banner
-media_type | false | string | banner / interstitial / native
+position | false | string | requisite for video. Available values: any / pre_roll / mid_roll / post_roll
+max_duration | false | int | requisite for video
+skippable | false | bool | requisite for video
+media_type | false | string | banner / interstitial / native / video
 
 ## Export Tag of a Specific Placement
 
@@ -701,7 +704,10 @@ cpm_price | false | float |
 width | false |integer |
 height | false | integer |
 size | false | string | 200x100 . it is required for placements whose media type is banner
-media_type | false | string | banner / interstitial / native
+position | false | string | requisite for video. Available values: any / pre_roll / mid_roll / post_roll
+max_duration | false | int | requisite for video
+skippable | false | bool | requisite for video
+media_type | false | string | banner / interstitial / native / video
 
 # Placement Groups
 ## Get All Placement Groups
