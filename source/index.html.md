@@ -684,7 +684,7 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 ```
 
 ### HTTP Request
-`POST http://HOST/api/publishers/:publisher_id/placements`
+`POST http://HOST/api/publishers/:publisher_id/placement_groups/:placment_group_id/placements`
 
 ### Query Parameters
 
