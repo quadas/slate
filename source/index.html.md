@@ -8,6 +8,8 @@ toc_footers:
 
 includes:
   - timezones
+  - countries
+  - universal_categories
   - errors
 
 search: false
@@ -23,7 +25,7 @@ Please retrieve your own token before accessing other resources.
 
 > Example Request:
 
-```
+```shell
 curl --data "username=USERNAME&password=PASSWORD" \
   --referer http://UI_HOST \
   -X POST http://HOST/api/users/sessions
@@ -218,7 +220,7 @@ id | true | None |
 
 > Example Request:
 
-```
+```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
      -H "x-access-token: TOKEN" \
      --data "publisher[name]=a&publisher[email]=a@a.com&publisher[state]=0&publisher[cpm_deal]=1&publisher[payment_term_attributes][id]=1&&publisher[payment_term_attributes][pricing_type]=4&cpm_price=2"
@@ -248,7 +250,7 @@ Key | Required | Type | Description
 name | true | string |
 state | true | ENUM | 0 - ACTIVE, 1 - INACTIVE, 2 - DELETED
 currency | true | string |
-country_id | true | string | Afghanistan,Albania,Algeria,American Samoa,Andorra,Angola,Anguilla,Antarctica,Antigua and Barbuda,Argentina,Armenia,Aruba,Australia,Austria,Azerbaijan,Bahamas,Bahrain,Bangladesh,Barbados,Belarus,Belgium,Belize,Benin,Bermuda,Bhutan,Bolivia,Bonaire,Bosnia and Herzegovina,Botswana,Bouvet Island,Brazil,British Indian Ocean Territory,Brunei Darussalam,Bulgaria,Burkina Faso,Burundi,Cambodia,Cameroon,Canada,Cape Verde,Cayman Islands,Central African Republic,Chad,Chile,China,Christmas Island,Cocos (Keeling) Islands,Colombia,Comoros,Congo,Democratic Republic of the Congo,Cook Islands,Costa Rica,Croatia,Cuba,CuraÃ§ao,Cyprus,Czech Republic,CÃ´te d'Ivoire,Denmark,Djibouti,Dominica,Dominican Republic,Ecuador,Egypt,El Salvador,Equatorial Guinea,Eritrea,Estonia,Ethiopia,Falkland Islands (Malvinas),Faroe Islands,Fiji,Finland,France,French Guiana,French Polynesia,French Southern Territories,Gabon,Gambia,Georgia,Germany,Ghana,Gibraltar,Greece,Greenland,Grenada,Guadeloupe,Guam,Guatemala,Guernsey,Guinea,Guinea-Bissau,Guyana,Haiti,Heard Island and McDonald Mcdonald Islands,Holy See (Vatican City State),Honduras,Hong Kong,Hungary,Iceland,India,Indonesia,Iran, Islamic Republic of,Iraq,Ireland,Isle of Man,Israel,Italy,Jamaica,Japan,Jersey,Jordan,Kazakhstan,Kenya,Kiribati,Korea, Democratic People's Republic of,Korea, Republic of,Kuwait,Kyrgyzstan,Lao People's Democratic Republic,Latvia,Lebanon,Lesotho,Liberia,Libya,Liechtenstein,Lithuania,Luxembourg,Macao,Macedonia, the Former Yugoslav Republic of,Madagascar,Malawi,Malaysia,Maldives,Mali,Malta,Marshall Islands,Martinique,Mauritania,Mauritius,Mayotte,Mexico,Micronesia, Federated States of,Moldova, Republic of,Monaco,Mongolia,Montenegro,Montserrat,Morocco,Mozambique,Myanmar,Namibia,Nauru,Nepal,Netherlands,New Caledonia,New Zealand,Nicaragua,Niger,Nigeria,Niue,Norfolk Island,Northern Mariana Islands,Norway,Oman,Pakistan,Palau,Palestine, State of,Panama,Papua New Guinea,Paraguay,Peru,Philippines,Pitcairn,Poland,Portugal,Puerto Rico,Qatar,Romania,Russian Federation,Rwanda,Reunion,Saint Barthalemy,Saint Helena,Saint Kitts and Nevis,Saint Lucia,Saint Martin (French part),Saint Pierre and Miquelon,Saint Vincent and the Grenadines,Samoa,San Marino,Sao Tome and Principe,Saudi Arabia,Senegal,Serbia,Seychelles,Sierra Leone,Singapore,Sint Maarten (Dutch part),Slovakia,Slovenia,Solomon Islands,Somalia,South Africa,South Georgia and the South Sandwich Islands,South Sudan,Spain,Sri Lanka,Sudan,Suriname,Svalbard and Jan Mayen,Swaziland,Sweden,Switzerland,Syrian Arab Republic,Taiwan,Tajikistan,United Republic of Tanzania,Thailand,Timor-Leste,Togo,Tokelau,Tonga,Trinidad and Tobago,Tunisia,Turkey,Turkmenistan,Turks and Caicos Islands,Tuvalu,Uganda,Ukraine,United Arab Emirates,United Kingdom,United States,United States Minor Outlying Islands,Uruguay,Uzbekistan,Vanuatu,Venezuela,Viet Nam,British Virgin Islands,US Virgin Islands,Wallis and Futuna,Western Sahara,Yemen,Zambia,Zimbabwe,Aland Islands
+country_id | true | string | valid country id, checkout [country mapping](#country-mappings)
 payment_term_attributes | true | PaymentTermDAO
 email | false | string | valid email address
 cpm_deal | false | bool | deal type
@@ -266,7 +268,7 @@ revenue_share_rate_percentage | false | float | 0 ~ 1
 
 > Example Request:
 
-```
+```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
      -H "x-access-token: TOKEN" \
      --data "publisher[name]=a&publisher[email]=a@a.com&publisher[state]=0&publisher[cpm_deal]=1&publisher[payment_term_attributes][id]=1&&publisher[payment_term_attributes][pricing_type]=4&cpm_price=2"
@@ -470,8 +472,8 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 
 > Example Response:
 
-```json
-// 201
+```
+HTTP status code 201
 ```
 
 ### HTTP Request
@@ -505,7 +507,7 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 > Example Response:
 
 ```json
-// 204
+HTTP status code 204
 ```
 
 ### HTTP Request
@@ -679,8 +681,8 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 
 > Example Response:
 
-```json
-// 201
+```
+HTTP status code 201
 ```
 
 ### HTTP Request
@@ -705,6 +707,7 @@ cpm_price | false | float |
 width | false |integer |
 height | false | integer |
 size | false | string | 200x100 . it is required for placements whose media type is banner
+universal_categories | false | json | structuring universal category ids, sample: {"1":[27,28],"2":[]}, key means parent category id, array values contains sub category ids, emply array means full select that top category. Checkout [Universal Category](#universal-category)
 position | false | string | requisite for video. Available values: any / pre_roll / mid_roll / post_roll
 max_duration | false | int | requisite for video
 skippable | false | bool | requisite for video
@@ -852,8 +855,8 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 
 > Example Response:
 
-```json
-// 204
+```
+HTTP status code 204
 ```
 
 ### HTTP Request
@@ -890,6 +893,7 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 ```
 
 > Example Response:
+
 ```json
 {
   "data": [
@@ -932,6 +936,7 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 ```
 
 > Example Response:
+
 ```json
 {
   "data": [
@@ -974,6 +979,7 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 ```
 
 > Example Response:
+
 ```json
 {
   "id": 1,
@@ -1029,6 +1035,7 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 ```
 
 > Example Response:
+
 ```json
 {
   "data": [
@@ -1089,8 +1096,9 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 ```
 
 > Example Response:
-```js
-// Status code 201
+
+```
+HTTP status code 201
 ```
 
 ### HTTP Request
@@ -1139,8 +1147,9 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 ```
 
 > Example Response:
-```js
-// Status code 204
+
+```
+HTTP status code 204
 ```
 
 ### HTTP Request
@@ -1151,6 +1160,7 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 
 Parameter | Required| Type | Description
 --------- | ------- | ---- | -----------
+id | true | int
 report_request | true    | ReportRequestDAO
 
 #### ReportRequestDAO
@@ -1188,8 +1198,9 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 ```
 
 > Example Response:
-```js
-// Status code 204
+
+```
+HTTP status code 204
 ```
 
 ### HTTP Request
@@ -1214,8 +1225,9 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 ```
 
 > Example Response:
-```js
-// Status code 201
+
+```
+HTTP status code 201
 ```
 
 ### HTTP Request
