@@ -1140,6 +1140,24 @@ You must replace <code>TOKEN</code> with your access token.
 <td>string</td>
 <td>banner / interstitial / native / video</td>
 </tr>
+<tr>
+<td>universal_categories</td>
+<td>false</td>
+<td>string</td>
+<td>json hash</td>
+</tr>
+<tr>
+<td>custom_categories</td>
+<td>false</td>
+<td>string</td>
+<td>json hash <code class="prettyprint">[{prop_id: 1, name: &#39;name&#39;, value: &#39;value&#39;, disabled: true/false }]</code></td>
+</tr>
+<tr>
+<td>custom_tags</td>
+<td>false</td>
+<td>string</td>
+<td>json hash <code class="prettyprint">[{prop_id: 1, name: &#39;name&#39;, value: &#39;value&#39;, disabled: true/false}]</code></td>
+</tr>
 </tbody></table>
 
 <h2 id="export-tag-of-a-specific-placement">Export Tag of a Specific Placement</h2>
@@ -1515,6 +1533,24 @@ You must replace <code>TOKEN</code> with your access token.
 <td>string</td>
 <td>banner / interstitial / native / video</td>
 </tr>
+<tr>
+<td>universal_categories</td>
+<td>false</td>
+<td>string</td>
+<td>json hash</td>
+</tr>
+<tr>
+<td>custom_categories</td>
+<td>false</td>
+<td>string</td>
+<td>json hash <code class="prettyprint">[{prop_id: 1, name: &#39;name&#39;, value: &#39;value&#39;, disabled: true/false}]</code></td>
+</tr>
+<tr>
+<td>custom_tags</td>
+<td>false</td>
+<td>string</td>
+<td>json hash <code class="prettyprint">[{prop_id: 1, name: &#39;name&#39;, value: &#39;value&#39;, disabled: true/false}]</code></td>
+</tr>
 </tbody></table>
 
 <h1 id="placement-groups">Placement Groups</h1>
@@ -1739,6 +1775,18 @@ You must replace <code>TOKEN</code> with your access token.
 <td>string</td>
 <td>json hash</td>
 </tr>
+<tr>
+<td>custom_categories</td>
+<td>false</td>
+<td>string</td>
+<td>json hash <code class="prettyprint">[{prop_id: 1, name: &#39;name&#39;, value: &#39;value&#39;, disabled: true/false}]</code></td>
+</tr>
+<tr>
+<td>custom_tags</td>
+<td>false</td>
+<td>string</td>
+<td>json hash <code class="prettyprint">[{prop_id: 1, name: &#39;name&#39;, value: &#39;value&#39;, disabled: true/false}]</code></td>
+</tr>
 </tbody></table>
 
 <h2 id="update-a-specific-placement-group-or-batch-update-placement-groups">Update a Specific Placement Group or Batch Update Placement Groups</h2>
@@ -1830,6 +1878,54 @@ You must replace <code>TOKEN</code> with your access token.
 <td>false</td>
 <td>string</td>
 <td>json hash</td>
+</tr>
+<tr>
+<td>custom_categories</td>
+<td>false</td>
+<td>string</td>
+<td>json hash <code class="prettyprint">[{prop_id: 1, name: &#39;name&#39;, value: &#39;value&#39;, disabled: true/false }]</code></td>
+</tr>
+<tr>
+<td>custom_tags</td>
+<td>false</td>
+<td>string</td>
+<td>json hash <code class="prettyprint">[{prop_id: 1, name: &#39;name&#39;, value: &#39;value&#39;, disabled: true/false }]</code></td>
+</tr>
+</tbody></table>
+
+<h1 id="custom-categories-tags">Custom Categories/Tags</h1>
+
+<h2 id="upload-a-new-category-tag-mapping-table">Upload a New Category/Tag Mapping Table</h2>
+
+<p>If you want to use your own categories or tags, please upload the maping to our server first.
+Thus you can use them by assigning <code class="prettyprint">custom_categories</code> or <code class="prettyprint">custom_tags</code> to placments.
+For more detail, check out relevant sections of placment management.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST http://HOST/api/custom_props/upload/:type</code></p>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>type</td>
+<td>true</td>
+<td>None</td>
+<td>ENUM: tag or category</td>
+</tr>
+<tr>
+<td>file</td>
+<td>true</td>
+<td>None</td>
+<td>yaml file</td>
 </tr>
 </tbody></table>
 
