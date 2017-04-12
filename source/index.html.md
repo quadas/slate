@@ -537,6 +537,9 @@ position | false | string | requisite for video. Available values: any / pre_rol
 max_duration | false | int | requisite for video
 skippable | false | bool | requisite for video
 media_type | false | string | banner / interstitial / native / video
+universal_categories | false | string | json hash
+custom_categories | false | string | json hash `[{prop_id: 1, name: 'name', value: 'value', disabled: true/false }]`
+custom_tags | false | string | json hash `[{prop_id: 1, name: 'name', value: 'value', disabled: true/false}]`
 
 ## Export Tag of a Specific Placement
 
@@ -712,6 +715,9 @@ position | false | string | requisite for video. Available values: any / pre_rol
 max_duration | false | int | requisite for video
 skippable | false | bool | requisite for video
 media_type | false | string | banner / interstitial / native / video
+universal_categories | false | string | json hash
+custom_categories | false | string | json hash `[{prop_id: 1, name: 'name', value: 'value', disabled: true/false}]`
+custom_tags | false | string | json hash `[{prop_id: 1, name: 'name', value: 'value', disabled: true/false}]`
 
 # Placement Groups
 ## Get All Placement Groups
@@ -840,6 +846,8 @@ state | true | ENUM | 0 - ACTIVE, 2 - DELETED
 url | false | string |
 description | false | string |
 universal_categories | false | string | json hash
+custom_categories | false | string | json hash `[{prop_id: 1, name: 'name', value: 'value', disabled: true/false}]`
+custom_tags | false | string | json hash `[{prop_id: 1, name: 'name', value: 'value', disabled: true/false}]`
 
 ## Update a Specific Placement Group or Batch Update Placement Groups
 
@@ -879,6 +887,25 @@ state | false | ENUM | 0 - ACTIVE, 2 - DELETED
 url | false | string |
 description | false | string |
 universal_categories | false | string | json hash
+custom_categories | false | string | json hash `[{prop_id: 1, name: 'name', value: 'value', disabled: true/false }]`
+custom_tags | false | string | json hash `[{prop_id: 1, name: 'name', value: 'value', disabled: true/false }]`
+
+# Custom Categories/Tags
+
+## Upload a New Category/Tag Mapping Table
+If you want to use your own categories or tags, please upload the maping to our server first.
+Thus you can use them by assigning `custom_categories` or `custom_tags` to placments.
+For more detail, check out relevant sections of placment management.
+
+### HTTP Request
+`POST http://HOST/api/custom_props/upload/:type`
+
+### Query Parameters
+
+Parameter | Required | Default | Description
+--------- | -------- | ------- | -----------
+type | true | None | ENUM: tag or category
+file | true | None | yaml file
 
 # Reports
 
