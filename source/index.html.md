@@ -155,8 +155,6 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 
 Parameter    | Required | Default | Type |  Description
 ------------ | -------- | ------- | ---- |  -----------
-platform_id | true | 0 | string | ID of platform, also known as 'SSP Id'
-publisher_ids | false | None | string | ID of publishers
 state | false | 0 | string | states, eg: 0,1,2
 keyword | false | None | string | keyword for publisher name
 interval | false | summation | string | Interval
@@ -400,7 +398,6 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 Key | Required | Default | Type | Description
 ----| -------- | ------- | ---  | -------------
 publisher_id | true | None | string | ID of Publisher
-platform_id | true | 0 | string | ID of platform, also known as 'SSP Id'
 placement_ids | false | None | string | ID of Placements
 placement_group_ids | false | None | string | ID of Placement Groups
 state | false | 0 | string | states, eg: 0,1,2
@@ -655,7 +652,6 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 Key | Required | Default | Type | Description
 ----| -------- | ------- | ---  | -------------
 publisher_id | true | None | string | ID of Publisher
-platform_id | true | 0 | string | ID of platform, also known as 'SSP Id'
 placement_group_id | true | None | string | ID of Placement Groups
 placement_ids | false | None | string | ID of Placements
 state | false | 0 | string | states, eg: 0,1,2
