@@ -28,7 +28,7 @@ Please retrieve your own token before accessing other resources.
 ```shell
 curl --data "username=USERNAME&password=PASSWORD" \
   --referer http://UI_HOST \
-  -X POST http://HOST/api/users/sessions
+  -X POST http://HOST/api/idp/sessions
 ```
 
 > Example Response:
@@ -39,7 +39,7 @@ curl --data "username=USERNAME&password=PASSWORD" \
 
 ### HTTP Request
 
-`POST http://HOST/api/users/sessions`
+`POST http://HOST/api/idp/sessions`
 
 ### Query Parameters
 
