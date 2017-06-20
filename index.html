@@ -272,7 +272,7 @@ You must replace <code>TOKEN</code> with your access token.
 <td>false</td>
 <td>0</td>
 <td>string</td>
-<td>states, eg: 0,1,2</td>
+<td>states, accepted values: 0 - active; 1 - inactive; 0,1 - all</td>
 </tr>
 <tr>
 <td>keyword</td>
@@ -280,13 +280,6 @@ You must replace <code>TOKEN</code> with your access token.
 <td>None</td>
 <td>string</td>
 <td>keyword for publisher name</td>
-</tr>
-<tr>
-<td>interval</td>
-<td>false</td>
-<td>summation</td>
-<td>string</td>
-<td>Interval</td>
 </tr>
 <tr>
 <td>start_at</td>
@@ -346,7 +339,7 @@ You must replace <code>TOKEN</code> with your access token.
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
      -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
-     http://HOST/api/publisher/1
+     http://HOST/api/publishers/1
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -376,7 +369,7 @@ You must replace <code>TOKEN</code> with your access token.
 </span></code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET http://HOST/api/publisher/:id</code></p>
+<p><code class="prettyprint">GET http://HOST/api/publishers/:id</code></p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -402,8 +395,9 @@ You must replace <code>TOKEN</code> with your access token.
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
+     -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
      -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
-     --data <span class="s2">"publisher[name]=a&amp;publisher[email]=a@a.com&amp;publisher[state]=0&amp;publisher[cpm_deal]=1&amp;publisher[payment_term_attributes][id]=1&amp;&amp;publisher[payment_term_attributes][pricing_type]=4&amp;cpm_price=2"</span>
+     --data <span class="s2">"{</span><span class="se">\"</span><span class="s2">publisher</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">createdviaapi</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">username</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">createdapi</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">email</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">api@api.com</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">state</span><span class="se">\"</span><span class="s2">:0,</span><span class="se">\"</span><span class="s2">cpm_deal</span><span class="se">\"</span><span class="s2">:1,</span><span class="se">\"</span><span class="s2">currency</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">USD</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">country_id</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Hong Kong</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">payment_term_attributes</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">pricing_type</span><span class="se">\"</span><span class="s2">:4,</span><span class="se">\"</span><span class="s2">cpm_price</span><span class="se">\"</span><span class="s2">:2}}}"</span> <span class="se">\</span>
      -X POST <span class="se">\</span>
      http://HOST/api/publishers
 </code></pre>
@@ -451,16 +445,22 @@ You must replace <code>TOKEN</code> with your access token.
 <td></td>
 </tr>
 <tr>
+<td>username</td>
+<td>true</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
 <td>state</td>
 <td>true</td>
-<td>ENUM</td>
-<td>0 - ACTIVE, 1 - INACTIVE, 2 - DELETED</td>
+<td>string</td>
+<td>accepted values: active, inactive</td>
 </tr>
 <tr>
 <td>currency</td>
 <td>true</td>
 <td>string</td>
-<td></td>
+<td>USD,CNY,JPY,TWD,HKD</td>
 </tr>
 <tr>
 <td>country_id</td>
@@ -537,7 +537,8 @@ You must replace <code>TOKEN</code> with your access token.
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
      -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
-     --data <span class="s2">"publisher[name]=a&amp;publisher[email]=a@a.com&amp;publisher[state]=0&amp;publisher[cpm_deal]=1&amp;publisher[payment_term_attributes][id]=1&amp;&amp;publisher[payment_term_attributes][pricing_type]=4&amp;cpm_price=2"</span>
+     -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+     --data <span class="s2">"{</span><span class="se">\"</span><span class="s2">publisher</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">editedviaapi</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">email</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">edited@mail.com</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">state</span><span class="se">\"</span><span class="s2">:"</span>active<span class="s2">",</span><span class="se">\"</span><span class="s2">cpm_deal</span><span class="se">\"</span><span class="s2">:1,</span><span class="se">\"</span><span class="s2">currency</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">USD</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">country_id</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Hong Kong</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">payment_term_attributes</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">pricing_type</span><span class="se">\"</span><span class="s2">:5,</span><span class="se">\"</span><span class="s2">revenue_share_rate</span><span class="se">\"</span><span class="s2">:2.3,</span><span class="se">\"</span><span class="s2">revenue_share_rate_percentage</span><span class="se">\"</span><span class="s2">:0.2}}}"</span> <span class="se">\</span>
      -X PUT <span class="se">\</span>
      http://HOST/api/publishers
 </code></pre>
@@ -548,7 +549,7 @@ You must replace <code>TOKEN</code> with your access token.
 </span></code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">PUT http://HOST/api/publisher/:ids</code></p>
+<p><code class="prettyprint">PUT http://HOST/api/publishers/:ids</code></p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -593,8 +594,8 @@ You must replace <code>TOKEN</code> with your access token.
 <tr>
 <td>state</td>
 <td>false</td>
-<td>ENUM</td>
-<td>0 - ACTIVE, 1 - INACTIVE, 2 - DELETED</td>
+<td>string</td>
+<td>accepted values: active, inactive</td>
 </tr>
 <tr>
 <td>currency</td>
@@ -679,6 +680,8 @@ You must replace <code>TOKEN</code> with your access token.
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
      -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
+     -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+     --data <span class="s2">"{</span><span class="se">\"</span><span class="s2">placement_group_id</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">53</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">state</span><span class="se">\"</span><span class="s2">:"</span>active<span class="s2">",</span><span class="se">\"</span><span class="s2">keyword</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">as</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">order</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">start_at,desc</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">currency</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">JPY</span><span class="se">\"</span><span class="s2">}"</span> <span class="se">\</span>
      http://HOST/api/publishers/:publisher_id/placements
 </code></pre>
 <blockquote>
@@ -717,8 +720,8 @@ You must replace <code>TOKEN</code> with your access token.
       </span><span class="nt">"ssp_platform_ecpc"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="nt">"end_at"</span><span class="p">:</span><span class="mi">1485313200000</span><span class="p">,</span><span class="w">
       </span><span class="nt">"publisher_ecpc"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"placement_id"</span><span class="p">:</span><span class="s2">"63"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"placement_name"</span><span class="p">:</span><span class="s2">"test_placement"</span><span class="w">
+      </span><span class="nt">"placement_id"</span><span class="p">:</span><span class="s2">"53"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"placement_name"</span><span class="p">:</span><span class="s2">"teast_placement"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
   </span><span class="nt">"summary"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -769,25 +772,18 @@ You must replace <code>TOKEN</code> with your access token.
 <td>ID of Publisher</td>
 </tr>
 <tr>
-<td>placement_ids</td>
+<td>placement_group_id</td>
 <td>false</td>
 <td>None</td>
 <td>string</td>
-<td>ID of Placements</td>
-</tr>
-<tr>
-<td>placement_group_ids</td>
-<td>false</td>
-<td>None</td>
-<td>string</td>
-<td>ID of Placement Groups</td>
+<td>ID of Placement Groups, e.g.: &ldquo;53&rdquo;</td>
 </tr>
 <tr>
 <td>state</td>
 <td>false</td>
 <td>0</td>
 <td>string</td>
-<td>states, eg: 0,1,2</td>
+<td>accepted values: 0 - active; 1 - inactive; 0,1 - all</td>
 </tr>
 <tr>
 <td>keyword</td>
@@ -816,20 +812,6 @@ You must replace <code>TOKEN</code> with your access token.
 <td>placement_ids,desc;start_at,desc</td>
 <td>string</td>
 <td>Order. eg: requests,desc;ctr,asc. supported ordering fields: &ldquo;start_at&rdquo;, &ldquo;requests&rdquo;, &ldquo;clicks&rdquo;, &ldquo;impressions&rdquo;, &ldquo;effective_impressions&rdquo;, &ldquo;blank_impressions&rdquo;, &ldquo;default_impressions&rdquo;, &ldquo;psa_impressions&rdquo;, &ldquo;kept_impressions&rdquo;, &ldquo;resold_impressions&rdquo;, &ldquo;rtb_impressions&rdquo;, &ldquo;external_impression_impressions&rdquo;, &ldquo;external_click_impressions&rdquo;, &ldquo;cpm_bids&rdquo;, &ldquo;cpc_bids&rdquo;, &ldquo;cpa_bids&rdquo;, &ldquo;amount&rdquo;, &ldquo;exchange_rate_markup&rdquo;, &ldquo;seller_revenue_share&rdquo;, &ldquo;Placement_revenue&rdquo;, &ldquo;ssp_platform_revenue&rdquo;, &ldquo;ssp_platform_profit&rdquo;, &ldquo;fill_rate&rdquo;, &ldquo;ctr&rdquo;, &ldquo;Placement_ecpm&rdquo;, &ldquo;Placement_ecpc&rdquo;, &ldquo;ssp_platform_ecpm&rdquo;, &ldquo;ssp_platform_ecpc&rdquo;, &ldquo;placement_id&rdquo;, &ldquo;placement_group_id&rdquo;, &ldquo;placement_name&rdquo;, &ldquo;placement_state&rdquo;, &ldquo;placements_count&rdquo;, &ldquo;placement_created_at&rdquo;</td>
-</tr>
-<tr>
-<td>interval</td>
-<td>false</td>
-<td>summation</td>
-<td>string</td>
-<td>Interval</td>
-</tr>
-<tr>
-<td>include_empty_row</td>
-<td>false</td>
-<td>0</td>
-<td>long</td>
-<td>0 for false, 1 for true</td>
 </tr>
 <tr>
 <td>offset</td>
@@ -932,9 +914,10 @@ You must replace <code>TOKEN</code> with your access token.
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
      -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
-     --data <span class="s2">"placements[][placement_id]=1&amp;placements[][name]=name"</span>
+     -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+     --data <span class="s2">"{</span><span class="se">\"</span><span class="s2">placements</span><span class="se">\"</span><span class="s2">:[{</span><span class="se">\"</span><span class="s2">placement_id</span><span class="se">\"</span><span class="s2">:114,</span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">copy aa</span><span class="se">\"</span><span class="s2">}]}"</span> <span class="se">\</span>
      -X POST <span class="se">\</span>
-     http://HOST/api/publishers/PUBLISHER_ID/placements
+     http://HOST/api/publishers/PUBLISHER_ID/placements/duplicate
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -994,9 +977,9 @@ You must replace <code>TOKEN</code> with your access token.
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
      -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
-     -X PUT <span class="se">\</span>
-     --data <span class="s2">"name=another_name"</span>
-     http://HOST/api/publishers/:publisher_id/placement_groups/:placement_group_id/placements/:ids
+     -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+     --data <span class="s2">"{</span><span class="se">\"</span><span class="s2">placement</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">another_name</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">state</span><span class="se">\"</span><span class="s2">:1,</span><span class="se">\"</span><span class="s2">media_type</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Video</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">has_reserve_price</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">1</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">reserve_cpm</span><span class="se">\"</span><span class="s2">:1.2,</span><span class="se">\"</span><span class="s2">size</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">3x3</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">position</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">pre_roll</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">max_duration</span><span class="se">\"</span><span class="s2">:30,</span><span class="se">\"</span><span class="s2">skippable</span><span class="se">\"</span><span class="s2">:true,</span><span class="se">\"</span><span class="s2">universal_categories</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">{</span><span class="se">\\</span><span class="s2">"</span>3<span class="se">\\</span><span class="s2">": [57] }</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">custom_categories</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">[{</span><span class="se">\\</span><span class="s2">"</span>prop_id<span class="se">\\</span><span class="s2">":1,</span><span class="se">\\</span><span class="s2">"</span>name<span class="se">\\</span><span class="s2">":</span><span class="se">\\</span><span class="s2">"</span>Cat<span class="se">\\</span><span class="s2">",</span><span class="se">\\</span><span class="s2">"</span>value<span class="se">\\</span><span class="s2">":</span><span class="se">\\</span><span class="s2">"</span>identical_value<span class="se">\\</span><span class="s2">",</span><span class="se">\\</span><span class="s2">"</span>disable<span class="se">\\</span><span class="s2">":false}]</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">custom_tags</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">[{</span><span class="se">\\</span><span class="s2">"</span>prop_id<span class="se">\\</span><span class="s2">":1,</span><span class="se">\\</span><span class="s2">"</span>name<span class="se">\\</span><span class="s2">":</span><span class="se">\\</span><span class="s2">"</span>Tag<span class="se">\\</span><span class="s2">",</span><span class="se">\\</span><span class="s2">"</span>value<span class="se">\\</span><span class="s2">":</span><span class="se">\\</span><span class="s2">"</span>identical_value<span class="se">\\</span><span class="s2">",</span><span class="se">\\</span><span class="s2">"</span>disable<span class="se">\\</span><span class="s2">":false}]</span><span class="se">\"</span><span class="s2">}}"</span> <span class="se">\</span>
+     http://HOST/api/publishers/:publisher_id/placements/:ids
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -1005,7 +988,7 @@ You must replace <code>TOKEN</code> with your access token.
 </span></code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">PUT http://HOST/api/publishers/:publisher_id/placement_groups/:placement_group_id/placements/:ids</code></p>
+<p><code class="prettyprint">POST http://HOST/api/publishers/:publisher_id/placements/:ids</code></p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -1025,12 +1008,6 @@ You must replace <code>TOKEN</code> with your access token.
 </tr>
 <tr>
 <td>publisher_id</td>
-<td>true</td>
-<td>None</td>
-<td></td>
-</tr>
-<tr>
-<td>placement_group_id</td>
 <td>true</td>
 <td>None</td>
 <td></td>
@@ -1062,38 +1039,32 @@ You must replace <code>TOKEN</code> with your access token.
 <tr>
 <td>state</td>
 <td>false</td>
-<td>ENUM</td>
-<td>0 - ACTIVE, 1 - INACTIVE, 2 - DELETED</td>
+<td>string</td>
+<td>accepted values: active, inactive</td>
+</tr>
+<tr>
+<td>media_type</td>
+<td>false</td>
+<td>string</td>
+<td>banner / interstitial / native / video</td>
 </tr>
 <tr>
 <td>has_reserve_price</td>
 <td>false</td>
-<td>integer</td>
-<td>1 or 0</td>
+<td>string</td>
+<td>&ldquo;1&rdquo; or &ldquo;0&rdquo;, it is required to be &ldquo;1&rdquo; when reserve_cpm has any value</td>
 </tr>
 <tr>
-<td>cpm_price</td>
+<td>reserve_cpm</td>
 <td>false</td>
 <td>float</td>
-<td></td>
-</tr>
-<tr>
-<td>width</td>
-<td>false</td>
-<td>integer</td>
-<td></td>
-</tr>
-<tr>
-<td>height</td>
-<td>false</td>
-<td>integer</td>
 <td></td>
 </tr>
 <tr>
 <td>size</td>
 <td>false</td>
 <td>string</td>
-<td>200x100 . it is required for placements whose media type is banner</td>
+<td>&ldquo;WIDTHxHEIGHT&rdquo;, e.g.: 200x100 . it is required for placements whose media type is banner</td>
 </tr>
 <tr>
 <td>position</td>
@@ -1114,28 +1085,22 @@ You must replace <code>TOKEN</code> with your access token.
 <td>requisite for video</td>
 </tr>
 <tr>
-<td>media_type</td>
-<td>false</td>
-<td>string</td>
-<td>banner / interstitial / native / video</td>
-</tr>
-<tr>
 <td>universal_categories</td>
 <td>false</td>
 <td>string</td>
-<td>json hash</td>
+<td>json hash which follows a particular style &ldquo;{ parent_id: [cat_a, cat_b] }&rdquo;, e.g.: &ldquo;{ \&quot;3\&rdquo;: [57, 58] }&ldquo; stands for selecting categories whose id is 57 or 58, both of them shares a parent category whose id is 3. As for the universal category table, please check out the section &quot;Universal Category&rdquo;</td>
 </tr>
 <tr>
 <td>custom_categories</td>
 <td>false</td>
 <td>string</td>
-<td>json hash <code class="prettyprint">[{prop_id: 1, name: &#39;name&#39;, value: &#39;value&#39;, disabled: true/false }]</code></td>
+<td>json hash. e.g.: &ldquo;[{ \&quot;prop_id\&rdquo;: 1, \&ldquo;name\&rdquo;: \&ldquo;name\&rdquo;, \&ldquo;value\&rdquo;: \&ldquo;value\&rdquo;, \&ldquo;disable\&rdquo;: true }]&ldquo; stands for selecting the record that matches the given props among uploaded categories. As for how to upload, please check out the section &quot;Custom Categories/Tags&rdquo;</td>
 </tr>
 <tr>
 <td>custom_tags</td>
 <td>false</td>
 <td>string</td>
-<td>json hash <code class="prettyprint">[{prop_id: 1, name: &#39;name&#39;, value: &#39;value&#39;, disabled: true/false}]</code></td>
+<td>json hash.  e.g.: &ldquo;[{ \&quot;prop_id\&rdquo;: 1, \&ldquo;name\&rdquo;: \&ldquo;name\&rdquo;, \&ldquo;value\&rdquo;: \&ldquo;value\&rdquo;, \&ldquo;disable\&rdquo;: true }]&ldquo; stands for selecting the record that matches the given props among uploaded tags. As for how to upload, please check out the section &quot;Custom Categories/Tags&rdquo;</td>
 </tr>
 </tbody></table>
 
@@ -1184,195 +1149,6 @@ You must replace <code>TOKEN</code> with your access token.
 </tr>
 </tbody></table>
 
-<h2 id="get-all-placements-under-a-specific-placement-group">Get All Placements Under a Specific Placement Group</h2>
-
-<blockquote>
-<p>Example Request:</p>
-</blockquote>
-<pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
-     http://HOST/api/publishers/:publisher_id/placement_groups/:placement_group_id/placements
-</code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"publisher_state"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"impressions"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"publisher_revenue"</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"ssp_platform_ecpm"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"placements_count"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"exchange_rate_markup"</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"blank_impressions"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"publisher_ecpm"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"kept_impressions"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"resold_impressions"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"ssp_platform_profit"</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"fill_rate"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"publisher_id"</span><span class="p">:</span><span class="s2">"7"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"placement_group_id"</span><span class="p">:</span><span class="s2">"13"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"trade_logs"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"amount"</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"ssp_platform_revenue"</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"default_impressions"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"interval"</span><span class="p">:</span><span class="s2">"2017-01-24T16:00:00.000Z/2017-01-25T03:00:00.000Z"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"start_at"</span><span class="p">:</span><span class="mi">1485273600000</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"clicks"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="mi">1477029059253</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"ctr"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"placement_state"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"publisher_name"</span><span class="p">:</span><span class="s2">"test 2"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"seller_revenue_share"</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"requests"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"ssp_platform_ecpc"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"end_at"</span><span class="p">:</span><span class="mi">1485313200000</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"publisher_ecpc"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"placement_id"</span><span class="p">:</span><span class="s2">"63"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"placement_name"</span><span class="p">:</span><span class="s2">"test_placement"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">],</span><span class="w">
-  </span><span class="nt">"summary"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"impressions"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"publisher_revenue"</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"ssp_platform_ecpm"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"exchange_rate_markup"</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"blank_impressions"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"publisher_ecpm"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"kept_impressions"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"resold_impressions"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"ssp_platform_profit"</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"fill_rate"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"trade_logs"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"amount"</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"ssp_platform_revenue"</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"default_impressions"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"clicks"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"ctr"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"seller_revenue_share"</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"requests"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"ssp_platform_ecpc"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"publisher_ecpc"</span><span class="p">:</span><span class="kc">null</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<h3 id="http-request">HTTP Request</h3>
-
-<p><code class="prettyprint">GET http://HOST/api/publishers/:publisher_id/placement_groups/:placement_group_id/placements</code></p>
-
-<h3 id="query-parameters">Query Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Key</th>
-<th>Required</th>
-<th>Default</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>publisher_id</td>
-<td>true</td>
-<td>None</td>
-<td>string</td>
-<td>ID of Publisher</td>
-</tr>
-<tr>
-<td>placement_group_id</td>
-<td>true</td>
-<td>None</td>
-<td>string</td>
-<td>ID of Placement Groups</td>
-</tr>
-<tr>
-<td>placement_ids</td>
-<td>false</td>
-<td>None</td>
-<td>string</td>
-<td>ID of Placements</td>
-</tr>
-<tr>
-<td>state</td>
-<td>false</td>
-<td>0</td>
-<td>string</td>
-<td>states, eg: 0,1,2</td>
-</tr>
-<tr>
-<td>keyword</td>
-<td>false</td>
-<td>None</td>
-<td>string</td>
-<td>keyword for Placement name</td>
-</tr>
-<tr>
-<td>start_at</td>
-<td>false</td>
-<td>0</td>
-<td>string</td>
-<td>Start At, unix timestamp at milliseconds</td>
-</tr>
-<tr>
-<td>end_at</td>
-<td>false</td>
-<td>None</td>
-<td>string</td>
-<td>End At, unix timestamp at milliseconds</td>
-</tr>
-<tr>
-<td>order</td>
-<td>false</td>
-<td>placement_ids,desc;start_at,desc</td>
-<td>string</td>
-<td>Order. eg: requests,desc;ctr,asc. supported ordering fields: &ldquo;start_at&rdquo;, &ldquo;requests&rdquo;, &ldquo;clicks&rdquo;, &ldquo;impressions&rdquo;, &ldquo;effective_impressions&rdquo;, &ldquo;blank_impressions&rdquo;, &ldquo;default_impressions&rdquo;, &ldquo;psa_impressions&rdquo;, &ldquo;kept_impressions&rdquo;, &ldquo;resold_impressions&rdquo;, &ldquo;rtb_impressions&rdquo;, &ldquo;external_impression_impressions&rdquo;, &ldquo;external_click_impressions&rdquo;, &ldquo;cpm_bids&rdquo;, &ldquo;cpc_bids&rdquo;, &ldquo;cpa_bids&rdquo;, &ldquo;amount&rdquo;, &ldquo;exchange_rate_markup&rdquo;, &ldquo;seller_revenue_share&rdquo;, &ldquo;Placement_revenue&rdquo;, &ldquo;ssp_platform_revenue&rdquo;, &ldquo;ssp_platform_profit&rdquo;, &ldquo;fill_rate&rdquo;, &ldquo;ctr&rdquo;, &ldquo;Placement_ecpm&rdquo;, &ldquo;Placement_ecpc&rdquo;, &ldquo;ssp_platform_ecpm&rdquo;, &ldquo;ssp_platform_ecpc&rdquo;, &ldquo;placement_id&rdquo;, &ldquo;placement_group_id&rdquo;, &ldquo;placement_name&rdquo;, &ldquo;placement_state&rdquo;, &ldquo;placements_count&rdquo;, &ldquo;placement_created_at&rdquo;</td>
-</tr>
-<tr>
-<td>interval</td>
-<td>false</td>
-<td>summation</td>
-<td>string</td>
-<td>Interval</td>
-</tr>
-<tr>
-<td>include_empty_row</td>
-<td>false</td>
-<td>0</td>
-<td>long</td>
-<td>0 for false, 1 for true</td>
-</tr>
-<tr>
-<td>offset</td>
-<td>false</td>
-<td>0</td>
-<td>long</td>
-<td>Offset</td>
-</tr>
-<tr>
-<td>limit</td>
-<td>false</td>
-<td>25</td>
-<td>long</td>
-<td>Limit</td>
-</tr>
-<tr>
-<td>currency</td>
-<td>false</td>
-<td>JPY</td>
-<td>string</td>
-<td>Currency. Support: USD,CNY,JPY,TWD,HKD</td>
-</tr>
-<tr>
-<td>timezone</td>
-<td>false</td>
-<td>Asia/Shanghai</td>
-<td>string</td>
-<td>Timezone, eg: Asia/Shanghai</td>
-</tr>
-</tbody></table>
-
 <h2 id="create-a-placement">Create a Placement</h2>
 
 <blockquote>
@@ -1380,8 +1156,9 @@ You must replace <code>TOKEN</code> with your access token.
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
      -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
+     -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+    --data <span class="s2">"{</span><span class="se">\"</span><span class="s2">placement</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">x_name</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">placement_group_id</span><span class="se">\"</span><span class="s2">:53,</span><span class="se">\"</span><span class="s2">state</span><span class="se">\"</span><span class="s2">:1,</span><span class="se">\"</span><span class="s2">media_type</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Video</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">has_reserve_price</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">1</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">reserve_cpm</span><span class="se">\"</span><span class="s2">:1.2,</span><span class="se">\"</span><span class="s2">size</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">3x3</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">position</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">pre_roll</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">max_duration</span><span class="se">\"</span><span class="s2">:30,</span><span class="se">\"</span><span class="s2">skippable</span><span class="se">\"</span><span class="s2">:true,</span><span class="se">\"</span><span class="s2">universal_categories</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">{ </span><span class="se">\\</span><span class="s2">"</span>3<span class="se">\\</span><span class="s2">": [57] }</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">custom_categories</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">[{</span><span class="se">\\</span><span class="s2">"</span>prop_id<span class="se">\\</span><span class="s2">":1,</span><span class="se">\\</span><span class="s2">"</span>name<span class="se">\\</span><span class="s2">":</span><span class="se">\\</span><span class="s2">"</span>Cat<span class="se">\\</span><span class="s2">",</span><span class="se">\\</span><span class="s2">"</span>value<span class="se">\\</span><span class="s2">":</span><span class="se">\\</span><span class="s2">"</span>identical_value<span class="se">\\</span><span class="s2">",</span><span class="se">\\</span><span class="s2">"</span>disable<span class="se">\\</span><span class="s2">":false}]</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">custom_tags</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">[{</span><span class="se">\\</span><span class="s2">"</span>prop_id<span class="se">\\</span><span class="s2">":1,</span><span class="se">\\</span><span class="s2">"</span>name<span class="se">\\</span><span class="s2">":</span><span class="se">\\</span><span class="s2">"</span>Tag<span class="se">\\</span><span class="s2">",</span><span class="se">\\</span><span class="s2">"</span>value<span class="se">\\</span><span class="s2">":</span><span class="se">\\</span><span class="s2">"</span>identical_value<span class="se">\\</span><span class="s2">",</span><span class="se">\\</span><span class="s2">"</span>disable<span class="se">\\</span><span class="s2">":false}]</span><span class="se">\"</span><span class="s2">}}"</span> <span class="se">\</span>
      -X POST <span class="se">\</span>
-     --data <span class="s2">"placement[name]=name"</span> <span class="se">\</span>
      http://HOST/api/publishers/:publisher_id/placement_groups/:placment_group_id/placements
 </code></pre>
 <blockquote>
@@ -1434,52 +1211,46 @@ You must replace <code>TOKEN</code> with your access token.
 </tr>
 </thead><tbody>
 <tr>
-<td>name</td>
+<td>placement_group_id</td>
 <td>true</td>
+<td>None</td>
+<td></td>
+</tr>
+<tr>
+<td>name</td>
+<td>false</td>
 <td>string</td>
 <td></td>
 </tr>
 <tr>
 <td>state</td>
-<td>true</td>
-<td>ENUM</td>
-<td>0 - ACTIVE, 1 - INACTIVE, 2 - DELETED</td>
+<td>false</td>
+<td>string</td>
+<td>accepted values: active, inactive</td>
+</tr>
+<tr>
+<td>media_type</td>
+<td>false</td>
+<td>string</td>
+<td>banner / interstitial / native / video</td>
 </tr>
 <tr>
 <td>has_reserve_price</td>
 <td>false</td>
-<td>integer</td>
-<td>1 or 0</td>
+<td>string</td>
+<td>&ldquo;1&rdquo; or &ldquo;0&rdquo;, it is required to be &ldquo;1&rdquo; when reserve_cpm has any value</td>
 </tr>
 <tr>
-<td>cpm_price</td>
+<td>reserve_cpm</td>
 <td>false</td>
 <td>float</td>
-<td></td>
-</tr>
-<tr>
-<td>width</td>
-<td>false</td>
-<td>integer</td>
-<td></td>
-</tr>
-<tr>
-<td>height</td>
-<td>false</td>
-<td>integer</td>
 <td></td>
 </tr>
 <tr>
 <td>size</td>
 <td>false</td>
 <td>string</td>
-<td>200x100 . it is required for placements whose media type is banner</td>
-</tr>
-<tr>
-<td>universal_categories</td>
-<td>false</td>
-<td>json</td>
-<td>structuring universal category ids, sample: {&ldquo;1&rdquo;:[27,28],&ldquo;2&rdquo;:[]}, key means parent category id, array values contains sub category ids, emply array means full select that top category. Checkout <a href="#universal-category">Universal Category</a></td>
+<td>&ldquo;WIDTHxHEIGHT&rdquo;, e.g.: 200x100 . it is required for placements whose media type is banner</td>
 </tr>
 <tr>
 <td>position</td>
@@ -1500,28 +1271,22 @@ You must replace <code>TOKEN</code> with your access token.
 <td>requisite for video</td>
 </tr>
 <tr>
-<td>media_type</td>
-<td>false</td>
-<td>string</td>
-<td>banner / interstitial / native / video</td>
-</tr>
-<tr>
 <td>universal_categories</td>
 <td>false</td>
 <td>string</td>
-<td>json hash</td>
+<td>json hash which follows a particular style &ldquo;{ parent_id: [cat_a, cat_b] }&rdquo;, e.g.: &ldquo;{ \&quot;3\&rdquo;: [57, 58] }&ldquo; stands for selecting categories whose id is 57 or 58, both of them shares a parent category whose id is 3. As for the universal category table, please check out the section &quot;Universal Category&rdquo;</td>
 </tr>
 <tr>
 <td>custom_categories</td>
 <td>false</td>
 <td>string</td>
-<td>json hash <code class="prettyprint">[{prop_id: 1, name: &#39;name&#39;, value: &#39;value&#39;, disabled: true/false}]</code></td>
+<td>json hash. e.g.: &ldquo;[{ \&quot;prop_id\&rdquo;: 1, \&ldquo;name\&rdquo;: \&ldquo;name\&rdquo;, \&ldquo;value\&rdquo;: \&ldquo;value\&rdquo;, \&ldquo;disable\&rdquo;: true }]&ldquo; stands for selecting the record that matches the given props among uploaded categories. As for how to upload, please check out the section &quot;Custom Categories/Tags&rdquo;</td>
 </tr>
 <tr>
 <td>custom_tags</td>
 <td>false</td>
 <td>string</td>
-<td>json hash <code class="prettyprint">[{prop_id: 1, name: &#39;name&#39;, value: &#39;value&#39;, disabled: true/false}]</code></td>
+<td>json hash.  e.g.: &ldquo;[{ \&quot;prop_id\&rdquo;: 1, \&ldquo;name\&rdquo;: \&ldquo;name\&rdquo;, \&ldquo;value\&rdquo;: \&ldquo;value\&rdquo;, \&ldquo;disable\&rdquo;: true }]&ldquo; stands for selecting the record that matches the given props among uploaded tags. As for how to upload, please check out the section &quot;Custom Categories/Tags&rdquo;</td>
 </tr>
 </tbody></table>
 
@@ -1583,18 +1348,6 @@ You must replace <code>TOKEN</code> with your access token.
 <td>id,desc</td>
 <td><code class="prettyprint">&lt;column&gt;,&lt;asc or desc&gt;</code>, columns could be: id, publisher_id, name, url, description, state, updated_at, placements_count</td>
 </tr>
-<tr>
-<td>limit</td>
-<td>false</td>
-<td>25</td>
-<td>int</td>
-</tr>
-<tr>
-<td>offset</td>
-<td>false</td>
-<td>0</td>
-<td>int</td>
-</tr>
 </tbody></table>
 
 <h2 id="get-a-specific-placement-group">Get a Specific Placement Group</h2>
@@ -1655,7 +1408,7 @@ You must replace <code>TOKEN</code> with your access token.
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
      -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
-     --data <span class="s2">"name=name"</span>
+     --data <span class="s2">"placment_group[name]=name"</span>
      -X POST
      http://HOST/api/publishers/:publisher_id/placement_groups
 </code></pre>
@@ -1682,6 +1435,7 @@ You must replace <code>TOKEN</code> with your access token.
 <table><thead>
 <tr>
 <th>Parameter</th>
+<th>Type</th>
 <th>Required</th>
 <th>Default</th>
 <th>Description</th>
@@ -1689,17 +1443,13 @@ You must replace <code>TOKEN</code> with your access token.
 </thead><tbody>
 <tr>
 <td>publisher_id</td>
+<td></td>
 <td>true</td>
 <td>None</td>
 <td></td>
 </tr>
 <tr>
-<td>placement_group_id</td>
-<td>true</td>
-<td>None</td>
-<td></td>
-</tr>
-<tr>
+<td>placement_group</td>
 <td>PlacementGroupDAO</td>
 <td>true</td>
 <td>None</td>
@@ -1726,8 +1476,8 @@ You must replace <code>TOKEN</code> with your access token.
 <tr>
 <td>state</td>
 <td>true</td>
-<td>ENUM</td>
-<td>0 - ACTIVE, 2 - DELETED</td>
+<td>string</td>
+<td>accepted values: active, deleted</td>
 </tr>
 <tr>
 <td>url</td>
@@ -1745,7 +1495,7 @@ You must replace <code>TOKEN</code> with your access token.
 <td>universal_categories</td>
 <td>false</td>
 <td>string</td>
-<td>json hash</td>
+<td>json hash which follows a particular style &ldquo;{ parent_id: [cat_a, cat_b] }&rdquo;, e.g.: &ldquo;{ \&quot;3\&rdquo;: [57, 58] }&ldquo; stands for selecting categories whose id is 57 or 58, both of them shares a parent category whose id is 3. As for the universal category table, please check out the section &quot;Universal Category&rdquo;</td>
 </tr>
 <tr>
 <td>custom_categories</td>
@@ -1768,9 +1518,10 @@ You must replace <code>TOKEN</code> with your access token.
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
      -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
-     --data <span class="s2">"name=name"</span>
-     -X PUT
-     http://HOST/api/publishers/:publisher_id/placement_groups/:placment_group_id
+     -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+     --data <span class="s2">"{</span><span class="se">\"</span><span class="s2">placement_group</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">updatedbyapi</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">state</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">deleted</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">description</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">asdsdA</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">url</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">http://google.com</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">universal_categories</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">{ </span><span class="se">\\</span><span class="s2">"</span>3<span class="se">\\</span><span class="s2">": [57] }</span><span class="se">\"</span><span class="s2">}}"</span> <span class="se">\</span>
+     -X POST <span class="se">\</span>
+     http://HOST/api/publishers/:publisher_id/placement_groups/:placment_group_ids
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -1781,11 +1532,14 @@ You must replace <code>TOKEN</code> with your access token.
 
 <p><code class="prettyprint">PUT http://HOST/api/publishers/:publisher_id/placement_groups/:placment_group_id</code></p>
 
+<p>If you&rsquo;d like to update multi placement groups simultaneously, replace <code class="prettyprint">:placment_group_id</code> with ids like &ldquo;1,2,3&rdquo;.</p>
+
 <h3 id="query-parameters">Query Parameters</h3>
 
 <table><thead>
 <tr>
 <th>Parameter</th>
+<th>Type</th>
 <th>Required</th>
 <th>Default</th>
 <th>Description</th>
@@ -1793,17 +1547,20 @@ You must replace <code>TOKEN</code> with your access token.
 </thead><tbody>
 <tr>
 <td>publisher_id</td>
+<td>int</td>
 <td>true</td>
 <td>None</td>
 <td></td>
 </tr>
 <tr>
 <td>placement_group_id</td>
+<td>int</td>
 <td>true</td>
 <td>None</td>
 <td></td>
 </tr>
 <tr>
+<td>placement_group</td>
 <td>PlacementGroupDAO</td>
 <td>true</td>
 <td>None</td>
@@ -1830,8 +1587,8 @@ You must replace <code>TOKEN</code> with your access token.
 <tr>
 <td>state</td>
 <td>false</td>
-<td>ENUM</td>
-<td>0 - ACTIVE, 2 - DELETED</td>
+<td>string</td>
+<td>accepted values: active, deleted</td>
 </tr>
 <tr>
 <td>url</td>
@@ -1849,7 +1606,7 @@ You must replace <code>TOKEN</code> with your access token.
 <td>universal_categories</td>
 <td>false</td>
 <td>string</td>
-<td>json hash</td>
+<td>json hash which follows a particular style &ldquo;{ parent_id: [cat_a, cat_b] }&rdquo;, e.g.: &ldquo;{ \&quot;3\&rdquo;: [57, 58] }&ldquo; stands for selecting categories whose id is 57 or 58, both of them shares a parent category whose id is 3. As for the universal category table, please check out the section &quot;Universal Category&rdquo;</td>
 </tr>
 <tr>
 <td>custom_categories</td>
@@ -1866,6 +1623,67 @@ You must replace <code>TOKEN</code> with your access token.
 </tbody></table>
 
 <h1 id="custom-categories-tags">Custom Categories/Tags</h1>
+
+<h2 id="list-uploaded-category-tag">List uploaded category/tag</h2>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET http://HOST/api/custom_props/:type</code></p>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Default</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>type</td>
+<td>true</td>
+<td>None</td>
+<td>string</td>
+<td>ENUM: custom_tag or custom_category</td>
+</tr>
+<tr>
+<td>keyword</td>
+<td>false</td>
+<td>None</td>
+<td>string</td>
+<td>search by keyword</td>
+</tr>
+<tr>
+<td>parent_id</td>
+<td>false</td>
+<td>None</td>
+<td>int</td>
+<td>query by parent_id</td>
+</tr>
+<tr>
+<td>order</td>
+<td>false</td>
+<td>&ldquo;id,asc&rdquo;</td>
+<td>string</td>
+<td>Order. <code class="prettyprint">&lt;column&gt;,&lt;asc or desc&gt;</code> eg: &ldquo;id,desc&rdquo; supported ordering fields: &ldquo;name&rdquo;, &ldquo;parent_id&rdquo;, &ldquo;value&rdquo;, &ldquo;disabled&rdquo;, &ldquo;updated_at&rdquo;, &ldquo;created_at&rdquo;</td>
+</tr>
+<tr>
+<td>offset</td>
+<td>false</td>
+<td>0</td>
+<td>long</td>
+<td>Offset</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>false</td>
+<td>25</td>
+<td>long</td>
+<td>Limit</td>
+</tr>
+</tbody></table>
 
 <h2 id="upload-a-new-category-tag-mapping-table">Upload a New Category/Tag Mapping Table</h2>
 
@@ -1897,10 +1715,32 @@ For more detail, check out relevant sections of placment management.</p>
 <td>file</td>
 <td>true</td>
 <td>None</td>
-<td>yaml file</td>
+<td>yaml file, please check out the example below</td>
 </tr>
 </tbody></table>
 
+<h3 id="example-yaml-file">example yaml file</h3>
+<pre class="highlight plaintext"><code>- tag_id: 1
+  category: # it could be empty
+  value: "1" # the unique value
+  name: "酒店" # name displayed on console
+  shown: true # visible or not
+- tag_id: 2
+  category:
+  value: "2"
+  name: "机票"
+  shown: true
+- tag_id: 3
+  category:
+  value: "3"
+  name: "火车票"
+  shown: true
+- tag_id: 11
+  category: 1 # it belongs to the record whose id is 1 (酒店)
+  value: "11"
+  name: "酒店_出发地"
+  shown: true
+</code></pre>
 <h1 id="reports">Reports</h1>
 
 <h2 id="get-recent-reports">Get Recent Reports</h2>
@@ -2039,7 +1879,7 @@ For more detail, check out relevant sections of placment management.</p>
 </tr>
 </tbody></table>
 
-<h2 id="get-a-specific-report">Get a Specific Report</h2>
+<h2 id="detail-of-a-specific-report-request">Detail of a Specific Report Request</h2>
 
 <blockquote>
 <p>Example Request:</p>
