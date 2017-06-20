@@ -738,8 +738,7 @@ state | true | string | accepted values: active, deleted
 url | false | string |
 description | false | string |
 universal_categories | false | string | json hash which follows a particular style "{ parent_id: [cat_a, cat_b] }", e.g.: "{ \"3\": [57, 58] }" stands for selecting categories whose id is 57 or 58, both of them shares a parent category whose id is 3. As for the universal category table, please check out the section "Universal Category"
-custom_categories | false | string | json hash `[{prop_id: 1, name: 'name', value: 'value', disabled: true/false}]`
-custom_tags | false | string | json hash `[{prop_id: 1, name: 'name', value: 'value', disabled: true/false}]`
+custom_categories | false | string | json hash e.g.: "[{ \"prop_id\": 1, \"name\": \"name\", \"value\": \"valcustom_tags | false | string | json hash.  e.g.: "[{ \"prop_id\": 1, \"name\": \"name\", \"value\": \"value\", \"disable\": true }]" stands for selecting the record that matches the given props among uploaded tags. As for how to upload, please check out the section "Custom Categories/Tags"ue\", \"disable\": true }]" stands for selecting the record that matches the given props among uploaded categories. As for how to upload, please check out the section "Custom Categories/Tags"
 
 ## Update a Specific Placement Group or Batch Update Placement Groups
 
@@ -782,8 +781,8 @@ state | false | string | accepted values: active, deleted
 url | false | string |
 description | false | string |
 universal_categories | false | string | json hash which follows a particular style "{ parent_id: [cat_a, cat_b] }", e.g.: "{ \"3\": [57, 58] }" stands for selecting categories whose id is 57 or 58, both of them shares a parent category whose id is 3. As for the universal category table, please check out the section "Universal Category"
-custom_categories | false | string | json hash `[{prop_id: 1, name: 'name', value: 'value', disabled: true/false }]`
-custom_tags | false | string | json hash `[{prop_id: 1, name: 'name', value: 'value', disabled: true/false }]`
+custom_categories | false | string | json hash. e.g.: "[{ \"prop_id\": 1, \"name\": \"name\", \"value\": \"value\", \"disable\": true }]" stands for selecting the record that matches the given props among uploaded categories. As for how to upload, please check out the section "Custom Categories/Tags"
+custom_tags | false | string | json hash.  e.g.: "[{ \"prop_id\": 1, \"name\": \"name\", \"value\": \"value\", \"disable\": true }]" stands for selecting the record that matches the given props among uploaded tags. As for how to upload, please check out the section "Custom Categories/Tags"
 
 # Custom Categories/Tags
 ## List uploaded category/tag
