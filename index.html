@@ -1501,13 +1501,7 @@ You must replace <code>TOKEN</code> with your access token.
 <td>custom_categories</td>
 <td>false</td>
 <td>string</td>
-<td>json hash <code class="prettyprint">[{prop_id: 1, name: &#39;name&#39;, value: &#39;value&#39;, disabled: true/false}]</code></td>
-</tr>
-<tr>
-<td>custom_tags</td>
-<td>false</td>
-<td>string</td>
-<td>json hash <code class="prettyprint">[{prop_id: 1, name: &#39;name&#39;, value: &#39;value&#39;, disabled: true/false}]</code></td>
+<td>json hash e.g.: &ldquo;[{ \&quot;prop_id\&rdquo;: 1, \&ldquo;name\&rdquo;: \&ldquo;name\&rdquo;, \&ldquo;value\&rdquo;: \&ldquo;valcustom_tags</td>
 </tr>
 </tbody></table>
 
@@ -1532,7 +1526,7 @@ You must replace <code>TOKEN</code> with your access token.
 
 <p><code class="prettyprint">PUT http://HOST/api/publishers/:publisher_id/placement_groups/:placment_group_id</code></p>
 
-<p>If you&rsquo;d like to update multi placement groups simultaneously, replace <code class="prettyprint">:placment_group_id</code> with ids like &ldquo;1,2,3&rdquo;.</p>
+<p>If you&rsquo;d like to update multi placement groups simultaneously, replace <code class="prettyprint">:placment_group_id</code> with ids like &quot;1,2,3&rdquo;.</p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -1612,13 +1606,13 @@ You must replace <code>TOKEN</code> with your access token.
 <td>custom_categories</td>
 <td>false</td>
 <td>string</td>
-<td>json hash <code class="prettyprint">[{prop_id: 1, name: &#39;name&#39;, value: &#39;value&#39;, disabled: true/false }]</code></td>
+<td>json hash. e.g.: &ldquo;[{ \&quot;prop_id\&rdquo;: 1, \&ldquo;name\&rdquo;: \&ldquo;name\&rdquo;, \&ldquo;value\&rdquo;: \&ldquo;value\&rdquo;, \&ldquo;disable\&rdquo;: true }]&ldquo; stands for selecting the record that matches the given props among uploaded categories. As for how to upload, please check out the section &quot;Custom Categories/Tags&rdquo;</td>
 </tr>
 <tr>
 <td>custom_tags</td>
 <td>false</td>
 <td>string</td>
-<td>json hash <code class="prettyprint">[{prop_id: 1, name: &#39;name&#39;, value: &#39;value&#39;, disabled: true/false }]</code></td>
+<td>json hash.  e.g.: &ldquo;[{ \&quot;prop_id\&rdquo;: 1, \&ldquo;name\&rdquo;: \&ldquo;name\&rdquo;, \&ldquo;value\&rdquo;: \&ldquo;value\&rdquo;, \&ldquo;disable\&rdquo;: true }]&ldquo; stands for selecting the record that matches the given props among uploaded tags. As for how to upload, please check out the section &quot;Custom Categories/Tags&rdquo;</td>
 </tr>
 </tbody></table>
 
