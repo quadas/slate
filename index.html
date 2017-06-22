@@ -258,6 +258,9 @@ You must replace value of `x-access-token` with your own access token.
 
 <p><code class="prettyprint">GET http://HOST/api/publishers</code></p>
 
+<p>The newly created publisher may not be to be observed immediately via this API.
+For more detail, please check out section &ldquo;Create a Publisher&rdquo;.</p>
+
 <h3 id="query-parameters">Query Parameters</h3>
 
 <table><thead>
@@ -376,6 +379,39 @@ You must replace value of `x-access-token` with your own access token.
 <h2 id="create-a-publisher">Create a Publisher</h2>
 
 <blockquote>
+<p>Example Request with eager load enabled:</p>
+</blockquote>
+<pre class="highlight shell"><code><span class="c"># with</span>
+curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
+     -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+     --data <span class="o">{</span><span class="se">\"</span>eager_load<span class="se">\"</span>:1,<span class="se">\"</span>publisher<span class="se">\"</span>:<span class="o">{</span><span class="se">\"</span>name<span class="se">\"</span>:<span class="se">\"</span>createdviaapi-c<span class="se">\"</span>,<span class="se">\"</span>username<span class="se">\"</span>:<span class="se">\"</span>createdapic<span class="se">\"</span>,<span class="se">\"</span>email<span class="se">\"</span>:<span class="se">\"</span>api@api.com<span class="se">\"</span>,<span class="se">\"</span>state<span class="se">\"</span>:<span class="se">\"</span>inactive<span class="se">\"</span>,<span class="se">\"</span>cpm_deal<span class="se">\"</span>:1,<span class="se">\"</span>currency<span class="se">\"</span>:<span class="se">\"</span>USD<span class="se">\"</span>,<span class="se">\"</span>country_id<span class="se">\"</span>:<span class="se">\"</span>Hong Kong<span class="se">\"</span>,<span class="se">\"</span>payment_term_attributes<span class="se">\"</span>:<span class="o">{</span><span class="se">\"</span>pricing_type<span class="se">\"</span>:4,<span class="se">\"</span>cpm_price<span class="se">\"</span>:2<span class="o">}}}</span> <span class="se">\</span>
+     -X POST <span class="se">\</span>
+     http://HOST/api/publishers
+</code></pre>
+<blockquote>
+<p>Example Response(200):</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">33</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"createdviaapi-d"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inactive"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"placements_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"payment_term"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">35</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"publisher_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">33</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"pricing_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cpm"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"cpm_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"revenue_share_rate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"revenue_share_rate_percentage"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"apply_served"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
@@ -394,6 +430,9 @@ You must replace value of `x-access-token` with your own access token.
 
 <p><code class="prettyprint">POST http://HOST/api/publishers</code></p>
 
+<p>It&rsquo;s an async API, whereby the new record cannot be seen until it gets indexed.
+But if you want to retrieve the record as soon as the API responds, please append <code class="prettyprint">eager_load=1</code> to your request param.</p>
+
 <h3 id="query-parameters">Query Parameters</h3>
 
 <table><thead>
@@ -404,6 +443,12 @@ You must replace value of `x-access-token` with your own access token.
 <th>Description</th>
 </tr>
 </thead><tbody>
+<tr>
+<td>eager_load</td>
+<td>false</td>
+<td>None</td>
+<td>set it to &ldquo;1&rdquo; if you prefer 200 response with data rather than plain 201 status code</td>
+</tr>
 <tr>
 <td>publisher</td>
 <td>true</td>
@@ -731,6 +776,9 @@ You must replace value of `x-access-token` with your own access token.
 
 <p><code class="prettyprint">GET http://HOST/api/publishers/{PUBLISHER_ID}/placements</code></p>
 
+<p>The newly created placement may not be to be observed immediately via this API.
+For more detail, please check out section &ldquo;Create a Placement&rdquo;.</p>
+
 <h3 id="query-parameters">Query Parameters</h3>
 
 <table><thead>
@@ -1057,6 +1105,106 @@ You must replace value of `x-access-token` with your own access token.
 <h2 id="create-a-placement">Create a Placement</h2>
 
 <blockquote>
+<p>Example Request with eager load enabled:</p>
+</blockquote>
+<pre class="highlight shell"><code><span class="c"># with</span>
+curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
+     -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+     --data <span class="o">{</span><span class="se">\"</span>eager_load<span class="se">\"</span>:1,<span class="se">\"</span>placement<span class="se">\"</span>:<span class="o">{</span><span class="se">\"</span>name<span class="se">\"</span>:<span class="se">\"</span>x_name_1<span class="se">\"</span>,<span class="se">\"</span>placement_group_id<span class="se">\"</span>:40,<span class="se">\"</span>state<span class="se">\"</span>:1,<span class="se">\"</span>media_type<span class="se">\"</span>:<span class="se">\"</span>Video<span class="se">\"</span>,<span class="se">\"</span>has_reserve_price<span class="se">\"</span>:<span class="se">\"</span>1<span class="se">\"</span>,<span class="se">\"</span>reserve_cpm<span class="se">\"</span>:1.2,<span class="se">\"</span>size<span class="se">\"</span>:<span class="se">\"</span>3x3<span class="se">\"</span>,<span class="se">\"</span>position<span class="se">\"</span>:<span class="se">\"</span>pre_roll<span class="se">\"</span>,<span class="se">\"</span>max_duration<span class="se">\"</span>:30,<span class="se">\"</span>skippable<span class="se">\"</span>:true,<span class="se">\"</span>universal_categories<span class="se">\"</span>:<span class="se">\"</span><span class="o">{</span> <span class="se">\\</span><span class="s2">"3</span><span class="se">\\</span><span class="s2">"</span>: <span class="o">[</span>57] <span class="o">}</span><span class="se">\"</span>,<span class="se">\"</span>custom_categories<span class="se">\"</span>:<span class="se">\"</span><span class="o">[{</span><span class="se">\\</span><span class="s2">"prop_id</span><span class="se">\\</span><span class="s2">"</span>:1,<span class="se">\\</span><span class="s2">"name</span><span class="se">\\</span><span class="s2">"</span>:<span class="se">\\</span><span class="s2">"Cat</span><span class="se">\\</span><span class="s2">"</span>,<span class="se">\\</span><span class="s2">"value</span><span class="se">\\</span><span class="s2">"</span>:<span class="se">\\</span><span class="s2">"identical_value</span><span class="se">\\</span><span class="s2">"</span>,<span class="se">\\</span><span class="s2">"disable</span><span class="se">\\</span><span class="s2">"</span>:false<span class="o">}]</span><span class="se">\"</span>,<span class="se">\"</span>custom_tags<span class="se">\"</span>:<span class="se">\"</span><span class="o">[{</span><span class="se">\\</span><span class="s2">"prop_id</span><span class="se">\\</span><span class="s2">"</span>:1,<span class="se">\\</span><span class="s2">"name</span><span class="se">\\</span><span class="s2">"</span>:<span class="se">\\</span><span class="s2">"Tag</span><span class="se">\\</span><span class="s2">"</span>,<span class="se">\\</span><span class="s2">"value</span><span class="se">\\</span><span class="s2">"</span>:<span class="se">\\</span><span class="s2">"identical_value</span><span class="se">\\</span><span class="s2">"</span>,<span class="se">\\</span><span class="s2">"disable</span><span class="se">\\</span><span class="s2">"</span>:false<span class="o">}]</span><span class="se">\"</span><span class="o">}}</span> <span class="se">\</span>
+     -X POST <span class="se">\</span>
+     http://HOST/api/publishers/29/placement_groups/53/placements
+</code></pre>
+<blockquote>
+<p>Example Response(200):</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"124"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"x_name_2"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inactive"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"size"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"media_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Video"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"universal_categories"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"3"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">57</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"categories_data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Business"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">57</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Advertising"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"placement_group_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"group_categories_data"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"ucat_mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"ccat_mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"ctag_mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"position"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pre_roll"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"max_duration"</span><span class="p">:</span><span class="w"> </span><span class="s2">"30.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"skippable"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"custom_categories"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"prop_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cat"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"identical_value"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"disable"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"custom_tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"prop_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tag"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"identical_value"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"disable"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"group_custom_categories"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"group_custom_tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"metrics"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"publisher_state"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"impressions"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"publisher_revenue"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"ssp_platform_ecpm"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"placements_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">19</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"exchange_rate_markup"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"blank_impressions"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"publisher_ecpm"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"kept_impressions"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"resold_impressions"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"ssp_platform_profit"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"fill_rate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"publisher_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"placement_group_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"trade_logs"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"ssp_platform_revenue"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"default_impressions"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"clicks"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1498130683000</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"ctr"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"placement_state"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"publisher_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Name"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"seller_revenue_share"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"requests"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"ssp_platform_ecpc"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"publisher_ecpc"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"placement_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">124</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"placement_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"x_name_2"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
@@ -1067,13 +1215,16 @@ You must replace value of `x-access-token` with your own access token.
      http://HOST/api/publishers/29/placement_groups/53/placements
 </code></pre>
 <blockquote>
-<p>Example Response:</p>
+<p>Example Response(201):</p>
 </blockquote>
 <pre class="highlight plaintext"><code>HTTP status code 201
 </code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
 <p><code class="prettyprint">POST http://HOST/api/publishers/{PUBLISHER_ID}/placement_groups/{PLACEMENT_GROUP_ID}/placements</code></p>
+
+<p>It&rsquo;s an async API, whereby the new record cannot be seen until it gets indexed.
+But if you want to retrieve the record as soon as the API responds, please append <code class="prettyprint">eager_load=1</code> to your request param.</p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -1085,6 +1236,12 @@ You must replace value of `x-access-token` with your own access token.
 <th>Description</th>
 </tr>
 </thead><tbody>
+<tr>
+<td>eager_load</td>
+<td>false</td>
+<td>None</td>
+<td>set it to &ldquo;1&rdquo; if you prefer 200 response with data rather than plain 201 status code</td>
+</tr>
 <tr>
 <td>placement</td>
 <td>true</td>
