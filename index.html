@@ -127,8 +127,10 @@
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
-<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NO_USE|ACCESS_TOKEN"</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre>
+<pre class="highlight javascript"><code><span class="c1">// You'll notice that the response consists of: "eyJ0eXAi..." + "|" + "eyJ0eX..."</span>
+<span class="c1">// The former part is checksum, the latter is access token which will be required in other requests</span>
+<span class="p">{</span> <span class="s2">"token"</span><span class="p">:</span> <span class="s2">"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwiZW1haWwiOiJ4QHkuY29tIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwiY3VycmVuY3kiOiJDTlkiLCJsYW5ndWFnZSI6ImNuIiwiZXhwaXJlc19hdCI6MTQ5Nzg2NDk3OCwicm9sZXMiOlsiU3VwZXIgQWRtaW4iXSwidGltZXpvbmUiOnsiaWQiOiIyMiIsInV0Y19vZmZzZXQiOjQ4MCwibG9uZyI6IihVVEMrMDgpIEFzaWEgLyBUYWlwZWkiLCJzeXN0ZW0iOiJBc2lhL1RhaXBlaSJ9fQ.h3kvM0ASi6MOx2hid3xT4xRCZRCSG8onWjUfO7hd09Q|eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiJkMjgxYzc2MTYxNGRmOTgxNWJmOTJhYzdmODFiOWRlNWRhODZiZDI5MDUzZTNjNDY3MzdmNjhjODU2ODJhN2NkIn0.PA9O34LmRMx5CBdm-N4j0qOpjgLtDEsKgzNuUVSIve0"</span> <span class="p">}</span>
+</code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
 <p><code class="prettyprint">POST http://HOST/api/idp/sessions</code></p>
@@ -166,18 +168,18 @@ You could drop the checksum part directly, for only access token is required in 
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H X-Requested-With: XMLHttpRequest <span class="se">\</span>
-  -H x-access-token: TOKEN <span class="se">\</span>
-  <span class="s2">"http://HOST/api/publishers"</span>
+  -H x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs <span class="se">\</span>
+  http://HOST/api/publishers
 </code></pre>
 <p>To authorize, just inject the pairs below into your request header:</p>
 
 <ul>
 <li><code class="prettyprint">X-Requested-With: XMLHttpRequest</code></li>
-<li><code class="prettyprint">x-access-token: TOKEN</code></li>
+<li><code class="prettyprint">x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs</code></li>
 </ul>
 
 <aside class="notice">
-You must replace <code>TOKEN</code> with your access token.
+You must replace value of `x-access-token` with your own access token.
 </aside>
 
 <h1 id="publishers">Publishers</h1>
@@ -188,7 +190,7 @@ You must replace <code>TOKEN</code> with your access token.
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
      http://HOST/api/publishers
 </code></pre>
 <blockquote>
@@ -338,7 +340,7 @@ You must replace <code>TOKEN</code> with your access token.
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
      http://HOST/api/publishers/1
 </code></pre>
 <blockquote>
@@ -369,25 +371,7 @@ You must replace <code>TOKEN</code> with your access token.
 </span></code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET http://HOST/api/publishers/:id</code></p>
-
-<h3 id="query-parameters">Query Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Required</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>id</td>
-<td>true</td>
-<td>None</td>
-<td></td>
-</tr>
-</tbody></table>
+<p><code class="prettyprint">GET http://HOST/api/publishers/{PUBLISHER_ID}</code></p>
 
 <h2 id="create-a-publisher">Create a Publisher</h2>
 
@@ -396,7 +380,7 @@ You must replace <code>TOKEN</code> with your access token.
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
      -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
      --data <span class="s2">"{</span><span class="se">\"</span><span class="s2">publisher</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">createdviaapi</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">username</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">createdapi</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">email</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">api@api.com</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">state</span><span class="se">\"</span><span class="s2">:0,</span><span class="se">\"</span><span class="s2">cpm_deal</span><span class="se">\"</span><span class="s2">:1,</span><span class="se">\"</span><span class="s2">currency</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">USD</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">country_id</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Hong Kong</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">payment_term_attributes</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">pricing_type</span><span class="se">\"</span><span class="s2">:4,</span><span class="se">\"</span><span class="s2">cpm_price</span><span class="se">\"</span><span class="s2">:2}}}"</span> <span class="se">\</span>
      -X POST <span class="se">\</span>
      http://HOST/api/publishers
@@ -536,11 +520,11 @@ You must replace <code>TOKEN</code> with your access token.
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
      -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
      --data <span class="s2">"{</span><span class="se">\"</span><span class="s2">publisher</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">editedviaapi</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">email</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">edited@mail.com</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">state</span><span class="se">\"</span><span class="s2">:"</span>active<span class="s2">",</span><span class="se">\"</span><span class="s2">cpm_deal</span><span class="se">\"</span><span class="s2">:1,</span><span class="se">\"</span><span class="s2">currency</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">USD</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">country_id</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Hong Kong</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">payment_term_attributes</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">pricing_type</span><span class="se">\"</span><span class="s2">:5,</span><span class="se">\"</span><span class="s2">revenue_share_rate</span><span class="se">\"</span><span class="s2">:2.3,</span><span class="se">\"</span><span class="s2">revenue_share_rate_percentage</span><span class="se">\"</span><span class="s2">:0.2}}}"</span> <span class="se">\</span>
-     -X PUT <span class="se">\</span>
-     http://HOST/api/publishers
+     -X POST <span class="se">\</span>
+     http://HOST/api/publishers/1,2
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -549,7 +533,7 @@ You must replace <code>TOKEN</code> with your access token.
 </span></code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">PUT http://HOST/api/publishers/:ids</code></p>
+<p><code class="prettyprint">POST http://HOST/api/publishers/{PUBLISHER_IDS_SEPARATED_WITH_COMMA}</code></p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -561,12 +545,6 @@ You must replace <code>TOKEN</code> with your access token.
 <th>Description</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>ids</td>
-<td>true</td>
-<td>string</td>
-<td>1,2,3,4</td>
-</tr>
 <tr>
 <td>publisher</td>
 <td>true</td>
@@ -679,10 +657,10 @@ You must replace <code>TOKEN</code> with your access token.
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
      -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
      --data <span class="s2">"{</span><span class="se">\"</span><span class="s2">placement_group_id</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">53</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">state</span><span class="se">\"</span><span class="s2">:"</span>active<span class="s2">",</span><span class="se">\"</span><span class="s2">keyword</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">as</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">order</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">start_at,desc</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">currency</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">JPY</span><span class="se">\"</span><span class="s2">}"</span> <span class="se">\</span>
-     http://HOST/api/publishers/:publisher_id/placements
+     http://HOST/api/publishers/29/placements
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -751,7 +729,7 @@ You must replace <code>TOKEN</code> with your access token.
 </span></code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET http://HOST/api/publishers/:publisher_id/placements</code></p>
+<p><code class="prettyprint">GET http://HOST/api/publishers/{PUBLISHER_ID}/placements</code></p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -764,13 +742,6 @@ You must replace <code>TOKEN</code> with your access token.
 <th>Description</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>publisher_id</td>
-<td>true</td>
-<td>None</td>
-<td>string</td>
-<td>ID of Publisher</td>
-</tr>
 <tr>
 <td>placement_group_id</td>
 <td>false</td>
@@ -849,8 +820,8 @@ You must replace <code>TOKEN</code> with your access token.
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
-     http://HOST/api/publishers/PUBLISHER_ID/placement_groups/PLACMENT_GROUP_ID/placements/PLACEMENT_ID
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
+     http://HOST/api/publishers/29/placement_groups/53/placements/1
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -875,37 +846,7 @@ You must replace <code>TOKEN</code> with your access token.
 </span></code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET http://HOST/api/publishers/:publisher_id/placement_groups/:placement_group_id/placements/:id</code></p>
-
-<h3 id="query-parameters">Query Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Required</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>id</td>
-<td>true</td>
-<td>None</td>
-<td></td>
-</tr>
-<tr>
-<td>publisher_id</td>
-<td>true</td>
-<td>None</td>
-<td></td>
-</tr>
-<tr>
-<td>placement_group_id</td>
-<td>true</td>
-<td>None</td>
-<td></td>
-</tr>
-</tbody></table>
+<p><code class="prettyprint">GET http://HOST/api/publishers/{PUBLISHER_ID}/placement_groups/{PLACMENT_GROUP_ID}/placements/{PLACEMENT_ID}</code></p>
 
 <h2 id="duplicate-placements">Duplicate Placements</h2>
 
@@ -913,11 +854,11 @@ You must replace <code>TOKEN</code> with your access token.
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
      -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
      --data <span class="s2">"{</span><span class="se">\"</span><span class="s2">placements</span><span class="se">\"</span><span class="s2">:[{</span><span class="se">\"</span><span class="s2">placement_id</span><span class="se">\"</span><span class="s2">:114,</span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">copy aa</span><span class="se">\"</span><span class="s2">}]}"</span> <span class="se">\</span>
      -X POST <span class="se">\</span>
-     http://HOST/api/publishers/PUBLISHER_ID/placements/duplicate
+     http://HOST/api/publishers/29/placements/duplicate
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -926,7 +867,7 @@ You must replace <code>TOKEN</code> with your access token.
 </code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST http://HOST/api/publishers/:publisher_id/placements/duplicate</code></p>
+<p><code class="prettyprint">POST http://HOST/api/publishers/{PUBLISHER_ID}/placements/duplicate</code></p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -957,7 +898,7 @@ You must replace <code>TOKEN</code> with your access token.
 </tr>
 </thead><tbody>
 <tr>
-<td>placemng_id</td>
+<td>placement_id</td>
 <td>true</td>
 <td>None</td>
 <td></td>
@@ -976,10 +917,10 @@ You must replace <code>TOKEN</code> with your access token.
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
      -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
      --data <span class="s2">"{</span><span class="se">\"</span><span class="s2">placement</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">another_name</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">state</span><span class="se">\"</span><span class="s2">:1,</span><span class="se">\"</span><span class="s2">media_type</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Video</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">has_reserve_price</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">1</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">reserve_cpm</span><span class="se">\"</span><span class="s2">:1.2,</span><span class="se">\"</span><span class="s2">size</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">3x3</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">position</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">pre_roll</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">max_duration</span><span class="se">\"</span><span class="s2">:30,</span><span class="se">\"</span><span class="s2">skippable</span><span class="se">\"</span><span class="s2">:true,</span><span class="se">\"</span><span class="s2">universal_categories</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">{</span><span class="se">\\</span><span class="s2">"</span>3<span class="se">\\</span><span class="s2">": [57] }</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">custom_categories</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">[{</span><span class="se">\\</span><span class="s2">"</span>prop_id<span class="se">\\</span><span class="s2">":1,</span><span class="se">\\</span><span class="s2">"</span>name<span class="se">\\</span><span class="s2">":</span><span class="se">\\</span><span class="s2">"</span>Cat<span class="se">\\</span><span class="s2">",</span><span class="se">\\</span><span class="s2">"</span>value<span class="se">\\</span><span class="s2">":</span><span class="se">\\</span><span class="s2">"</span>identical_value<span class="se">\\</span><span class="s2">",</span><span class="se">\\</span><span class="s2">"</span>disable<span class="se">\\</span><span class="s2">":false}]</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">custom_tags</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">[{</span><span class="se">\\</span><span class="s2">"</span>prop_id<span class="se">\\</span><span class="s2">":1,</span><span class="se">\\</span><span class="s2">"</span>name<span class="se">\\</span><span class="s2">":</span><span class="se">\\</span><span class="s2">"</span>Tag<span class="se">\\</span><span class="s2">",</span><span class="se">\\</span><span class="s2">"</span>value<span class="se">\\</span><span class="s2">":</span><span class="se">\\</span><span class="s2">"</span>identical_value<span class="se">\\</span><span class="s2">",</span><span class="se">\\</span><span class="s2">"</span>disable<span class="se">\\</span><span class="s2">":false}]</span><span class="se">\"</span><span class="s2">}}"</span> <span class="se">\</span>
-     http://HOST/api/publishers/:publisher_id/placements/:ids
+     http://HOST/api/publishers/29/placements/1
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -988,7 +929,7 @@ You must replace <code>TOKEN</code> with your access token.
 </span></code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST http://HOST/api/publishers/:publisher_id/placements/:ids</code></p>
+<p><code class="prettyprint">POST http://HOST/api/publishers/{PUBLISHER_ID}/placements/{PLACEMENT_ID_SEPARATED_WITH_COMMA}</code></p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -1000,18 +941,6 @@ You must replace <code>TOKEN</code> with your access token.
 <th>Description</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>ids</td>
-<td>true</td>
-<td>None</td>
-<td>1,2,3,4</td>
-</tr>
-<tr>
-<td>publisher_id</td>
-<td>true</td>
-<td>None</td>
-<td></td>
-</tr>
 <tr>
 <td>placement</td>
 <td>true</td>
@@ -1110,8 +1039,8 @@ You must replace <code>TOKEN</code> with your access token.
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
-     http://HOST/api/publishers/:publisher_id/placements/:id/export_tag
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
+     http://HOST/api/publishers/1/placements/2/export_tag
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -1123,31 +1052,7 @@ You must replace <code>TOKEN</code> with your access token.
 </span></code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET http://HOST/api/publishers/:publisher_id/placements/:id/export_tag</code></p>
-
-<h3 id="query-parameters">Query Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Required</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>publisher_id</td>
-<td>true</td>
-<td>None</td>
-<td></td>
-</tr>
-<tr>
-<td>id</td>
-<td>true</td>
-<td>None</td>
-<td></td>
-</tr>
-</tbody></table>
+<p><code class="prettyprint">GET http://HOST/api/publishers/{PUBLISHER_ID}/placements/{PLACEMENT_ID}/export_tag</code></p>
 
 <h2 id="create-a-placement">Create a Placement</h2>
 
@@ -1155,11 +1060,11 @@ You must replace <code>TOKEN</code> with your access token.
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
      -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
     --data <span class="s2">"{</span><span class="se">\"</span><span class="s2">placement</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">x_name</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">placement_group_id</span><span class="se">\"</span><span class="s2">:53,</span><span class="se">\"</span><span class="s2">state</span><span class="se">\"</span><span class="s2">:1,</span><span class="se">\"</span><span class="s2">media_type</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Video</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">has_reserve_price</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">1</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">reserve_cpm</span><span class="se">\"</span><span class="s2">:1.2,</span><span class="se">\"</span><span class="s2">size</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">3x3</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">position</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">pre_roll</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">max_duration</span><span class="se">\"</span><span class="s2">:30,</span><span class="se">\"</span><span class="s2">skippable</span><span class="se">\"</span><span class="s2">:true,</span><span class="se">\"</span><span class="s2">universal_categories</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">{ </span><span class="se">\\</span><span class="s2">"</span>3<span class="se">\\</span><span class="s2">": [57] }</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">custom_categories</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">[{</span><span class="se">\\</span><span class="s2">"</span>prop_id<span class="se">\\</span><span class="s2">":1,</span><span class="se">\\</span><span class="s2">"</span>name<span class="se">\\</span><span class="s2">":</span><span class="se">\\</span><span class="s2">"</span>Cat<span class="se">\\</span><span class="s2">",</span><span class="se">\\</span><span class="s2">"</span>value<span class="se">\\</span><span class="s2">":</span><span class="se">\\</span><span class="s2">"</span>identical_value<span class="se">\\</span><span class="s2">",</span><span class="se">\\</span><span class="s2">"</span>disable<span class="se">\\</span><span class="s2">":false}]</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">custom_tags</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">[{</span><span class="se">\\</span><span class="s2">"</span>prop_id<span class="se">\\</span><span class="s2">":1,</span><span class="se">\\</span><span class="s2">"</span>name<span class="se">\\</span><span class="s2">":</span><span class="se">\\</span><span class="s2">"</span>Tag<span class="se">\\</span><span class="s2">",</span><span class="se">\\</span><span class="s2">"</span>value<span class="se">\\</span><span class="s2">":</span><span class="se">\\</span><span class="s2">"</span>identical_value<span class="se">\\</span><span class="s2">",</span><span class="se">\\</span><span class="s2">"</span>disable<span class="se">\\</span><span class="s2">":false}]</span><span class="se">\"</span><span class="s2">}}"</span> <span class="se">\</span>
      -X POST <span class="se">\</span>
-     http://HOST/api/publishers/:publisher_id/placement_groups/:placment_group_id/placements
+     http://HOST/api/publishers/29/placement_groups/53/placements
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -1168,7 +1073,7 @@ You must replace <code>TOKEN</code> with your access token.
 </code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST http://HOST/api/publishers/:publisher_id/placement_groups/:placment_group_id/placements</code></p>
+<p><code class="prettyprint">POST http://HOST/api/publishers/{PUBLISHER_ID}/placement_groups/{PLACEMENT_GROUP_ID}/placements</code></p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -1180,18 +1085,6 @@ You must replace <code>TOKEN</code> with your access token.
 <th>Description</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>publisher_id</td>
-<td>true</td>
-<td>None</td>
-<td></td>
-</tr>
-<tr>
-<td>placement_group_id</td>
-<td>true</td>
-<td>None</td>
-<td></td>
-</tr>
 <tr>
 <td>placement</td>
 <td>true</td>
@@ -1298,8 +1191,8 @@ You must replace <code>TOKEN</code> with your access token.
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
-     http://HOST/api/publishers/:publisher_id/placement_groups
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
+     http://HOST/api/publishers/29/placement_groups
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -1324,7 +1217,7 @@ You must replace <code>TOKEN</code> with your access token.
 </span></code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET http://HOST/api/publishers/:publisher_id/placement_groups</code></p>
+<p><code class="prettyprint">GET http://HOST/api/publishers/{PUBLISHER_ID}/placement_groups</code></p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -1336,12 +1229,6 @@ You must replace <code>TOKEN</code> with your access token.
 <th>Description</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>publisher_id</td>
-<td>true</td>
-<td>None</td>
-<td></td>
-</tr>
 <tr>
 <td>order</td>
 <td>false</td>
@@ -1356,8 +1243,8 @@ You must replace <code>TOKEN</code> with your access token.
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
-     http://HOST/api/publishers/:publisher_id/placement_groups/:placment_group_id
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
+     http://HOST/api/publishers/29/placement_groups/1
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -1375,31 +1262,7 @@ You must replace <code>TOKEN</code> with your access token.
 </span></code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET http://HOST/api/publishers/:publisher_id/placement_groups/:placment_group_id</code></p>
-
-<h3 id="query-parameters">Query Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Required</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>publisher_id</td>
-<td>true</td>
-<td>None</td>
-<td></td>
-</tr>
-<tr>
-<td>placement_group_id</td>
-<td>true</td>
-<td>None</td>
-<td></td>
-</tr>
-</tbody></table>
+<p><code class="prettyprint">GET http://HOST/api/publishers/{PUBLISHER_ID}/placement_groups/{PLACEMENT_GROUP_ID}</code></p>
 
 <h2 id="create-a-placement-group">Create a Placement Group</h2>
 
@@ -1407,10 +1270,10 @@ You must replace <code>TOKEN</code> with your access token.
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
      --data <span class="s2">"placment_group[name]=name"</span>
      -X POST
-     http://HOST/api/publishers/:publisher_id/placement_groups
+     http://HOST/api/publishers/29/placement_groups
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -1428,7 +1291,7 @@ You must replace <code>TOKEN</code> with your access token.
 </span></code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST http://HOST/api/publishers/:publisher_id/placement_groups</code></p>
+<p><code class="prettyprint">POST http://HOST/api/publishers/{PUBLISHER_ID}/placement_groups</code></p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -1441,13 +1304,6 @@ You must replace <code>TOKEN</code> with your access token.
 <th>Description</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>publisher_id</td>
-<td></td>
-<td>true</td>
-<td>None</td>
-<td></td>
-</tr>
 <tr>
 <td>placement_group</td>
 <td>PlacementGroupDAO</td>
@@ -1511,11 +1367,11 @@ You must replace <code>TOKEN</code> with your access token.
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
      -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
      --data <span class="s2">"{</span><span class="se">\"</span><span class="s2">placement_group</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">updatedbyapi</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">state</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">deleted</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">description</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">asdsdA</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">url</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">http://google.com</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">universal_categories</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">{ </span><span class="se">\\</span><span class="s2">"</span>3<span class="se">\\</span><span class="s2">": [57] }</span><span class="se">\"</span><span class="s2">}}"</span> <span class="se">\</span>
      -X POST <span class="se">\</span>
-     http://HOST/api/publishers/:publisher_id/placement_groups/:placment_group_ids
+     http://HOST/api/publishers/29/placement_groups/1
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -1524,9 +1380,9 @@ You must replace <code>TOKEN</code> with your access token.
 </code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">PUT http://HOST/api/publishers/:publisher_id/placement_groups/:placment_group_id</code></p>
+<p><code class="prettyprint">PUT http://HOST/api/publishers/{PUBLISHER_DI}/placement_groups/{PLACEMENT_GROUP_ID_SEPARATED_WITH_COMMA}</code></p>
 
-<p>If you&rsquo;d like to update multi placement groups simultaneously, replace <code class="prettyprint">:placment_group_id</code> with ids like &quot;1,2,3&rdquo;.</p>
+<p>If you&rsquo;d like to update multi placement groups simultaneously, replace <code class="prettyprint">{PLACEMENT_GROUP_ID_SEPARATED_WITH_COMMA}</code> with ids like &quot;1,2,3&rdquo;.</p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -1539,20 +1395,6 @@ You must replace <code>TOKEN</code> with your access token.
 <th>Description</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>publisher_id</td>
-<td>int</td>
-<td>true</td>
-<td>None</td>
-<td></td>
-</tr>
-<tr>
-<td>placement_group_id</td>
-<td>int</td>
-<td>true</td>
-<td>None</td>
-<td></td>
-</tr>
 <tr>
 <td>placement_group</td>
 <td>PlacementGroupDAO</td>
@@ -1622,7 +1464,9 @@ You must replace <code>TOKEN</code> with your access token.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET http://HOST/api/custom_props/:type</code></p>
+<p><code class="prettyprint">GET http://HOST/api/custom_props/{TYPE}</code></p>
+
+<p><code class="prettyprint">{TYPE}</code> could be either &ldquo;custom_tag&rdquo; or &ldquo;custom_category&rdquo;.</p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -1635,13 +1479,6 @@ You must replace <code>TOKEN</code> with your access token.
 <th>Description</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>type</td>
-<td>true</td>
-<td>None</td>
-<td>string</td>
-<td>ENUM: custom_tag or custom_category</td>
-</tr>
 <tr>
 <td>keyword</td>
 <td>false</td>
@@ -1687,7 +1524,9 @@ For more detail, check out relevant sections of placment management.</p>
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST http://HOST/api/custom_props/upload/:type</code></p>
+<p><code class="prettyprint">POST http://HOST/api/custom_props/upload/{TYPE}</code></p>
+
+<p><code class="prettyprint">{TYPE}</code> could be either &ldquo;tag&rdquo; or &ldquo;category&rdquo;</p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -1699,12 +1538,6 @@ For more detail, check out relevant sections of placment management.</p>
 <th>Description</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>type</td>
-<td>true</td>
-<td>None</td>
-<td>ENUM: tag or category</td>
-</tr>
 <tr>
 <td>file</td>
 <td>true</td>
@@ -1743,7 +1576,7 @@ For more detail, check out relevant sections of placment management.</p>
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
     http://HOST/api/report_requests/recent_list
 </code></pre>
 <blockquote>
@@ -1811,7 +1644,7 @@ For more detail, check out relevant sections of placment management.</p>
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
     http://HOST/api/report_requests/schedule_list
 </code></pre>
 <blockquote>
@@ -1879,8 +1712,8 @@ For more detail, check out relevant sections of placment management.</p>
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
-    http://HOST/api/report_requests/:id
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
+    http://HOST/api/report_requests/1
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -1920,25 +1753,7 @@ For more detail, check out relevant sections of placment management.</p>
 </span></code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET http://HOST/api/report_requests/:id</code></p>
-
-<h3 id="query-parameters">Query Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Required</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>id</td>
-<td>true</td>
-<td>None</td>
-<td></td>
-</tr>
-</tbody></table>
+<p><code class="prettyprint">GET http://HOST/api/report_requests/{REPORT_REQUEST_ID}</code></p>
 
 <h2 id="get-the-review-of-a-specific-report">Get the Review of a Specific Report</h2>
 
@@ -1946,8 +1761,8 @@ For more detail, check out relevant sections of placment management.</p>
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
-    http://HOST/api/report_requests/:id/review
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
+    http://HOST/api/report_requests/1/review
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -1984,30 +1799,12 @@ For more detail, check out relevant sections of placment management.</p>
 <p>If you prefer a xlsx file:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
-    http://HOST/api/report_requests/:id/review?format<span class="o">=</span>xlsx
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
+    http://HOST/api/report_requests/1/review?format<span class="o">=</span>xlsx
 </code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET http://HOST/api/report_requests/:id/review</code></p>
-
-<h3 id="query-parameters">Query Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Required</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>id</td>
-<td>true</td>
-<td>None</td>
-<td></td>
-</tr>
-</tbody></table>
+<p><code class="prettyprint">GET http://HOST/api/report_requests/{REPORT_REQUEST_ID}/review</code></p>
 
 <h2 id="create-a-new-report">Create a New Report</h2>
 
@@ -2015,7 +1812,7 @@ For more detail, check out relevant sections of placment management.</p>
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
     -X POST <span class="se">\</span>
     --data <span class="s2">"report_reqeust[name]=name"</span> <span class="se">\</span>
     http://HOST/api/report_requests
@@ -2179,10 +1976,10 @@ For more detail, check out relevant sections of placment management.</p>
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
     -X PUT <span class="se">\</span>
     --data <span class="s2">"report_reqeust[name]=name"</span> <span class="se">\</span>
-    http://HOST/api/report_requests/:id
+    http://HOST/api/report_requests/1
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -2191,7 +1988,7 @@ For more detail, check out relevant sections of placment management.</p>
 </code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">PUT http://HOST/api/report_requests/:id</code></p>
+<p><code class="prettyprint">PUT http://HOST/api/report_requests/{REPORT_REQUEST_ID}</code></p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -2203,12 +2000,6 @@ For more detail, check out relevant sections of placment management.</p>
 <th>Description</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>id</td>
-<td>true</td>
-<td>int</td>
-<td></td>
-</tr>
 <tr>
 <td>report_request</td>
 <td>true</td>
@@ -2349,9 +2140,9 @@ For more detail, check out relevant sections of placment management.</p>
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
     -X DELETE <span class="se">\</span>
-    http://HOST/api/report_requests/:id
+    http://HOST/api/report_requests/1
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -2360,25 +2151,7 @@ For more detail, check out relevant sections of placment management.</p>
 </code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">DELETE http://HOST/api/report_requests/:id</code></p>
-
-<h3 id="query-parameters">Query Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Required</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>id</td>
-<td>true</td>
-<td>int</td>
-<td></td>
-</tr>
-</tbody></table>
+<p><code class="prettyprint">DELETE http://HOST/api/report_requests/{REPORT_REQUEST_ID}</code></p>
 
 <h2 id="rerun-a-specific-report">Rerun a Specific Report</h2>
 
@@ -2386,9 +2159,9 @@ For more detail, check out relevant sections of placment management.</p>
 <p>Example Request:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -H <span class="s2">"X-Requested-With: XMLHttpRequest"</span> <span class="se">\</span>
-     -H <span class="s2">"x-access-token: TOKEN"</span> <span class="se">\</span>
+     -H <span class="s2">"x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs"</span> <span class="se">\</span>
     -X POST <span class="se">\</span>
-    http://HOST/api/report_requests/:id/rerun
+    http://HOST/api/report_requests/1/rerun
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -2397,25 +2170,7 @@ For more detail, check out relevant sections of placment management.</p>
 </code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST http://HOST/api/report_requests/:id/rerun</code></p>
-
-<h3 id="query-parameters">Query Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Required</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>id</td>
-<td>true</td>
-<td>int</td>
-<td></td>
-</tr>
-</tbody></table>
+<p><code class="prettyprint">POST http://HOST/api/report_requests/{REPORT_REQUEST_ID}/rerun</code></p>
 
           <h1 id="timezone-mappings">Timezone Mappings</h1>
 
