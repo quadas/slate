@@ -33,8 +33,10 @@ curl --data "username=USERNAME&password=PASSWORD" \
 
 > Example Response:
 
-```json
-{ "token": "NO_USE|ACCESS_TOKEN" }
+```js
+// You'll notice that the response consists of: "eyJ0eXAi..." + "|" + "eyJ0eX..."
+// The former part is checksum, the latter is access token which will be required in other requests
+{ "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwiZW1haWwiOiJ4QHkuY29tIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwiY3VycmVuY3kiOiJDTlkiLCJsYW5ndWFnZSI6ImNuIiwiZXhwaXJlc19hdCI6MTQ5Nzg2NDk3OCwicm9sZXMiOlsiU3VwZXIgQWRtaW4iXSwidGltZXpvbmUiOnsiaWQiOiIyMiIsInV0Y19vZmZzZXQiOjQ4MCwibG9uZyI6IihVVEMrMDgpIEFzaWEgLyBUYWlwZWkiLCJzeXN0ZW0iOiJBc2lhL1RhaXBlaSJ9fQ.h3kvM0ASi6MOx2hid3xT4xRCZRCSG8onWjUfO7hd09Q|eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiJkMjgxYzc2MTYxNGRmOTgxNWJmOTJhYzdmODFiOWRlNWRhODZiZDI5MDUzZTNjNDY3MzdmNjhjODU2ODJhN2NkIn0.PA9O34LmRMx5CBdm-N4j0qOpjgLtDEsKgzNuUVSIve0" }
 ```
 
 ### HTTP Request
@@ -60,17 +62,17 @@ You could drop the checksum part directly, for only access token is required in 
 
 ```shell
 curl -H X-Requested-With: XMLHttpRequest \
-  -H x-access-token: TOKEN \
-  "http://HOST/api/publishers"
+  -H x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs \
+  http://HOST/api/publishers
 ```
 
 To authorize, just inject the pairs below into your request header:
 
 - `X-Requested-With: XMLHttpRequest`
-- `x-access-token: TOKEN`
+- `x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs`
 
 <aside class="notice">
-You must replace <code>TOKEN</code> with your access token.
+You must replace value of `x-access-token` with your own access token.
 </aside>
 
 # Publishers
@@ -81,7 +83,7 @@ You must replace <code>TOKEN</code> with your access token.
 
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
-     -H "x-access-token: TOKEN" \
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
      http://HOST/api/publishers
 ```
 
@@ -172,7 +174,7 @@ timezone | false | Asia/Shanghai | string | Timezone, eg: Asia/Shanghai
 
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
-     -H "x-access-token: TOKEN" \
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
      http://HOST/api/publishers/1
 ```
 
@@ -205,13 +207,7 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 
 ### HTTP Request
 
-`GET http://HOST/api/publishers/:id`
-
-### Query Parameters
-
-Parameter | Required | Default | Description
---------- | -------- | ------- | -----------
-id | true | None |
+`GET http://HOST/api/publishers/{PUBLISHER_ID}`
 
 ## Create a Publisher
 
@@ -220,7 +216,7 @@ id | true | None |
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
      -H "Content-Type: application/json" \
-     -H "x-access-token: TOKEN" \
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
      --data "{\"publisher\":{\"name\":\"createdviaapi\",\"username\":\"createdapi\",\"email\":\"api@api.com\",\"state\":0,\"cpm_deal\":1,\"currency\":\"USD\",\"country_id\":\"Hong Kong\",\"payment_term_attributes\":{\"pricing_type\":4,\"cpm_price\":2}}}" \
      -X POST \
      http://HOST/api/publishers
@@ -269,11 +265,11 @@ revenue_share_rate_percentage | false | float | 0 ~ 1
 
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
-     -H "x-access-token: TOKEN" \
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
      -H "Content-Type: application/json" \
      --data "{\"publisher\":{\"name\":\"editedviaapi\",\"email\":\"edited@mail.com\",\"state\":"active",\"cpm_deal\":1,\"currency\":\"USD\",\"country_id\":\"Hong Kong\",\"payment_term_attributes\":{\"pricing_type\":5,\"revenue_share_rate\":2.3,\"revenue_share_rate_percentage\":0.2}}}" \
-     -X PUT \
-     http://HOST/api/publishers
+     -X POST \
+     http://HOST/api/publishers/1,2
 ```
 
 > Example Response:
@@ -284,13 +280,12 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 
 ### HTTP Request
 
-`PUT http://HOST/api/publishers/:ids`
+`POST http://HOST/api/publishers/{PUBLISHER_IDS_SEPARATED_WITH_COMMA}`
 
 ### Query Parameters
 
 Parameter | Required| Type | Description
 --------- | ------- | ---- | -----------
-ids       | true    | string | 1,2,3,4
 publisher | true    | PublisherDAO |
 
 #### PublihserDAO
@@ -321,10 +316,10 @@ revenue_share_rate_percentage | false | float | 0 ~ 1
 
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
-     -H "x-access-token: TOKEN" \
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
      -H "Content-Type: application/json" \
      --data "{\"placement_group_id\":\"53\",\"state\":"active",\"keyword\":\"as\",\"order\":\"start_at,desc\",\"currency\":\"JPY\"}" \
-     http://HOST/api/publishers/:publisher_id/placements
+     http://HOST/api/publishers/29/placements
 ```
 
 > Example Response:
@@ -395,13 +390,12 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 
 ### HTTP Request
 
-`GET http://HOST/api/publishers/:publisher_id/placements`
+`GET http://HOST/api/publishers/{PUBLISHER_ID}/placements`
 
 ### Query Parameters
 
 Key | Required | Default | Type | Description
 ----| -------- | ------- | ---  | -------------
-publisher_id | true | None | string | ID of Publisher
 placement_group_id | false | None | string | ID of Placement Groups, e.g.: "53"
 state | false | 0 | string | accepted values: 0 - active; 1 - inactive; 0,1 - all
 keyword | false | None | string | keyword for Placement name
@@ -419,8 +413,8 @@ timezone | false | Asia/Shanghai | string | Timezone, eg: Asia/Shanghai
 
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
-     -H "x-access-token: TOKEN" \
-     http://HOST/api/publishers/PUBLISHER_ID/placement_groups/PLACMENT_GROUP_ID/placements/PLACEMENT_ID
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
+     http://HOST/api/publishers/29/placement_groups/53/placements/1
 ```
 
 > Example Response:
@@ -446,15 +440,7 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 ```
 
 ### HTTP Request
-`GET http://HOST/api/publishers/:publisher_id/placement_groups/:placement_group_id/placements/:id`
-
-### Query Parameters
-
-Parameter | Required | Default | Description
---------- | -------- | ------- | -----------
-id        | true | None |
-publisher_id | true | None |
-placement_group_id | true | None |
+`GET http://HOST/api/publishers/{PUBLISHER_ID}/placement_groups/{PLACMENT_GROUP_ID}/placements/{PLACEMENT_ID}`
 
 ## Duplicate Placements
 
@@ -462,11 +448,11 @@ placement_group_id | true | None |
 
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
-     -H "x-access-token: TOKEN" \
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
      -H "Content-Type: application/json" \
      --data "{\"placements\":[{\"placement_id\":114,\"name\":\"copy aa\"}]}" \
      -X POST \
-     http://HOST/api/publishers/PUBLISHER_ID/placements/duplicate
+     http://HOST/api/publishers/29/placements/duplicate
 ```
 
 > Example Response:
@@ -476,7 +462,7 @@ HTTP status code 201
 ```
 
 ### HTTP Request
-`POST http://HOST/api/publishers/:publisher_id/placements/duplicate`
+`POST http://HOST/api/publishers/{PUBLISHER_ID}/placements/duplicate`
 
 ### Query Parameters
 
@@ -488,7 +474,7 @@ placements | true | None |
 
 Key | Required | Default | Description
 --------- | -------- | ------- | -----------
-placemng_id | true | None |
+placement_id | true | None |
 name | true | None |
 
 ## Update a Specific Placements or Batch Update Placements
@@ -497,10 +483,10 @@ name | true | None |
 
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
-     -H "x-access-token: TOKEN" \
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
      -H "Content-Type: application/json" \
      --data "{\"placement\":{\"name\":\"another_name\",\"state\":1,\"media_type\":\"Video\",\"has_reserve_price\":\"1\",\"reserve_cpm\":1.2,\"size\":\"3x3\",\"position\":\"pre_roll\",\"max_duration\":30,\"skippable\":true,\"universal_categories\":\"{\\"3\\": [57] }\",\"custom_categories\":\"[{\\"prop_id\\":1,\\"name\\":\\"Cat\\",\\"value\\":\\"identical_value\\",\\"disable\\":false}]\",\"custom_tags\":\"[{\\"prop_id\\":1,\\"name\\":\\"Tag\\",\\"value\\":\\"identical_value\\",\\"disable\\":false}]\"}}" \
-     http://HOST/api/publishers/:publisher_id/placements/:ids
+     http://HOST/api/publishers/29/placements/1
 ```
 
 > Example Response:
@@ -510,14 +496,12 @@ HTTP status code 204
 ```
 
 ### HTTP Request
-`POST http://HOST/api/publishers/:publisher_id/placements/:ids`
+`POST http://HOST/api/publishers/{PUBLISHER_ID}/placements/{PLACEMENT_ID_SEPARATED_WITH_COMMA}`
 
 ### Query Parameters
 
 Parameter | Required | Default | Description
 --------- | -------- | ------- | -----------
-ids | true | None | 1,2,3,4
-publisher_id | true | None |
 placement | true | None | PlacementDAO
 
 #### PlacementDAO
@@ -543,8 +527,8 @@ custom_tags | false | string | json hash.  e.g.: "[{ \"prop_id\": 1, \"name\": \
 
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
-     -H "x-access-token: TOKEN" \
-     http://HOST/api/publishers/:publisher_id/placements/:id/export_tag
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
+     http://HOST/api/publishers/1/placements/2/export_tag
 ```
 
 > Example Response:
@@ -557,14 +541,7 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 ```
 
 ### HTTP Request
-`GET http://HOST/api/publishers/:publisher_id/placements/:id/export_tag`
-
-### Query Parameters
-
-Parameter | Required | Default | Description
---------- | -------- | ------- | -----------
-publisher_id | true | None |
-id | true | None |
+`GET http://HOST/api/publishers/{PUBLISHER_ID}/placements/{PLACEMENT_ID}/export_tag`
 
 ## Create a Placement
 
@@ -572,11 +549,11 @@ id | true | None |
 
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
-     -H "x-access-token: TOKEN" \
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
      -H "Content-Type: application/json" \
     --data "{\"placement\":{\"name\":\"x_name\",\"placement_group_id\":53,\"state\":1,\"media_type\":\"Video\",\"has_reserve_price\":\"1\",\"reserve_cpm\":1.2,\"size\":\"3x3\",\"position\":\"pre_roll\",\"max_duration\":30,\"skippable\":true,\"universal_categories\":\"{ \\"3\\": [57] }\",\"custom_categories\":\"[{\\"prop_id\\":1,\\"name\\":\\"Cat\\",\\"value\\":\\"identical_value\\",\\"disable\\":false}]\",\"custom_tags\":\"[{\\"prop_id\\":1,\\"name\\":\\"Tag\\",\\"value\\":\\"identical_value\\",\\"disable\\":false}]\"}}" \
      -X POST \
-     http://HOST/api/publishers/:publisher_id/placement_groups/:placment_group_id/placements
+     http://HOST/api/publishers/29/placement_groups/53/placements
 ```
 
 > Example Response:
@@ -586,14 +563,12 @@ HTTP status code 201
 ```
 
 ### HTTP Request
-`POST http://HOST/api/publishers/:publisher_id/placement_groups/:placment_group_id/placements`
+`POST http://HOST/api/publishers/{PUBLISHER_ID}/placement_groups/{PLACEMENT_GROUP_ID}/placements`
 
 ### Query Parameters
 
 Parameter | Required | Default | Description
 --------- | -------- | ------- | -----------
-publisher_id | true | None |
-placement_group_id | true | None |
 placement | true | None | PlacementDAO
 
 #### PlacementDAO
@@ -621,8 +596,8 @@ custom_tags | false | string | json hash.  e.g.: "[{ \"prop_id\": 1, \"name\": \
 
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
-     -H "x-access-token: TOKEN" \
-     http://HOST/api/publishers/:publisher_id/placement_groups
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
+     http://HOST/api/publishers/29/placement_groups
 ```
 
 > Example Response:
@@ -648,13 +623,12 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 ```
 
 ### HTTP Request
-`GET http://HOST/api/publishers/:publisher_id/placement_groups`
+`GET http://HOST/api/publishers/{PUBLISHER_ID}/placement_groups`
 
 ### Query Parameters
 
 Parameter | Required | Default | Description
 --------- | -------- | ------- | -----------
-publisher_id | true | None |
 order | false | id,desc | `<column>,<asc or desc>`, columns could be: id, publisher_id, name, url, description, state, updated_at, placements_count
 
 ## Get a Specific Placement Group
@@ -663,8 +637,8 @@ order | false | id,desc | `<column>,<asc or desc>`, columns could be: id, publis
 
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
-     -H "x-access-token: TOKEN" \
-     http://HOST/api/publishers/:publisher_id/placement_groups/:placment_group_id
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
+     http://HOST/api/publishers/29/placement_groups/1
 ```
 
 > Example Response:
@@ -683,14 +657,7 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 ```
 
 ### HTTP Request
-`GET http://HOST/api/publishers/:publisher_id/placement_groups/:placment_group_id`
-
-### Query Parameters
-
-Parameter | Required | Default | Description
---------- | -------- | ------- | -----------
-publisher_id | true | None |
-placement_group_id | true | None |
+`GET http://HOST/api/publishers/{PUBLISHER_ID}/placement_groups/{PLACEMENT_GROUP_ID}`
 
 ## Create a Placement Group
 
@@ -698,10 +665,10 @@ placement_group_id | true | None |
 
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
-     -H "x-access-token: TOKEN" \
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
      --data "placment_group[name]=name"
      -X POST
-     http://HOST/api/publishers/:publisher_id/placement_groups
+     http://HOST/api/publishers/29/placement_groups
 ```
 
 > Example Response:
@@ -720,13 +687,12 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 ```
 
 ### HTTP Request
-`POST http://HOST/api/publishers/:publisher_id/placement_groups`
+`POST http://HOST/api/publishers/{PUBLISHER_ID}/placement_groups`
 
 ### Query Parameters
 
 Parameter | Type | Required | Default | Description
 --------- | ---- | -------- | ------- | -----------
-publisher_id | | true | None |
 placement_group | PlacementGroupDAO | true | None |
 
 #### PlacementGroupDAO
@@ -746,11 +712,11 @@ custom_categories | false | string | json hash e.g.: "[{ \"prop_id\": 1, \"name\
 
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
-     -H "x-access-token: TOKEN" \
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
      -H "Content-Type: application/json" \
      --data "{\"placement_group\":{\"name\":\"updatedbyapi\",\"state\":\"deleted\",\"description\":\"asdsdA\",\"url\":\"http://google.com\",\"universal_categories\":\"{ \\"3\\": [57] }\"}}" \
      -X POST \
-     http://HOST/api/publishers/:publisher_id/placement_groups/:placment_group_ids
+     http://HOST/api/publishers/29/placement_groups/1
 ```
 
 > Example Response:
@@ -760,16 +726,14 @@ HTTP status code 204
 ```
 
 ### HTTP Request
-`PUT http://HOST/api/publishers/:publisher_id/placement_groups/:placment_group_id`
+`PUT http://HOST/api/publishers/{PUBLISHER_DI}/placement_groups/{PLACEMENT_GROUP_ID_SEPARATED_WITH_COMMA}`
 
-If you'd like to update multi placement groups simultaneously, replace `:placment_group_id` with ids like "1,2,3".
+If you'd like to update multi placement groups simultaneously, replace `{PLACEMENT_GROUP_ID_SEPARATED_WITH_COMMA}` with ids like "1,2,3".
 
 ### Query Parameters
 
 Parameter | Type | Required | Default | Description
 --------- | ---- | -------- | ------- | -----------
-publisher_id | int | true | None |
-placement_group_id | int | true | None |
 placement_group | PlacementGroupDAO | true | None |
 
 #### PlacementGroupDAO
@@ -788,13 +752,14 @@ custom_tags | false | string | json hash.  e.g.: "[{ \"prop_id\": 1, \"name\": \
 ## List uploaded category/tag
 
 ### HTTP Request
-`GET http://HOST/api/custom_props/:type`
+`GET http://HOST/api/custom_props/{TYPE}`
+
+`{TYPE}` could be either "custom_tag" or "custom_category".
 
 ### Query Parameters
 
 Parameter | Required | Default | Type | Description
 --------- | -------- | ------- | ---- | -----------
-type | true | None | string | ENUM: custom_tag or custom_category
 keyword | false | None | string | search by keyword
 parent_id | false | None | int | query by parent_id
 order | false | "id,asc" | string | Order. `<column>,<asc or desc>` eg: "id,desc" supported ordering fields: "name", "parent_id", "value", "disabled", "updated_at", "created_at"
@@ -807,13 +772,14 @@ Thus you can use them by assigning `custom_categories` or `custom_tags` to placm
 For more detail, check out relevant sections of placment management.
 
 ### HTTP Request
-`POST http://HOST/api/custom_props/upload/:type`
+`POST http://HOST/api/custom_props/upload/{TYPE}`
+
+`{TYPE}` could be either "tag" or "category"
 
 ### Query Parameters
 
 Parameter | Required | Default | Description
 --------- | -------- | ------- | -----------
-type | true | None | ENUM: tag or category
 file | true | None | yaml file, please check out the example below
 
 ### example yaml file
@@ -848,7 +814,7 @@ file | true | None | yaml file, please check out the example below
 
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
-     -H "x-access-token: TOKEN" \
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
     http://HOST/api/report_requests/recent_list
 ```
 
@@ -891,7 +857,7 @@ order | false | None | string | e.g.: name,desc, type,asc. supported ordering fi
 
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
-     -H "x-access-token: TOKEN" \
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
     http://HOST/api/report_requests/schedule_list
 ```
 
@@ -934,8 +900,8 @@ order | false | None | string | e.g.: name,desc, type,asc. supported ordering fi
 
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
-     -H "x-access-token: TOKEN" \
-    http://HOST/api/report_requests/:id
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
+    http://HOST/api/report_requests/1
 ```
 
 > Example Response:
@@ -976,13 +942,7 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 ```
 
 ### HTTP Request
-`GET http://HOST/api/report_requests/:id`
-
-### Query Parameters
-
-Parameter | Required | Default | Description
---------- | -------- | ------- | -----------
-id | true | None |
+`GET http://HOST/api/report_requests/{REPORT_REQUEST_ID}`
 
 ## Get the Review of a Specific Report
 
@@ -990,8 +950,8 @@ id | true | None |
 
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
-     -H "x-access-token: TOKEN" \
-    http://HOST/api/report_requests/:id/review
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
+    http://HOST/api/report_requests/1/review
 ```
 
 > Example Response:
@@ -1030,18 +990,12 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
-     -H "x-access-token: TOKEN" \
-    http://HOST/api/report_requests/:id/review?format=xlsx
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
+    http://HOST/api/report_requests/1/review?format=xlsx
 ```
 
 ### HTTP Request
-`GET http://HOST/api/report_requests/:id/review`
-
-### Query Parameters
-
-Parameter | Required | Default | Description
---------- | -------- | ------- | -----------
-id | true | None |
+`GET http://HOST/api/report_requests/{REPORT_REQUEST_ID}/review`
 
 ## Create a New Report
 
@@ -1049,7 +1003,7 @@ id | true | None |
 
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
-     -H "x-access-token: TOKEN" \
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
     -X POST \
     --data "report_reqeust[name]=name" \
     http://HOST/api/report_requests
@@ -1100,10 +1054,10 @@ interval | false | string | supported values: "summation", "hour", "day", "month
 
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
-     -H "x-access-token: TOKEN" \
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
     -X PUT \
     --data "report_reqeust[name]=name" \
-    http://HOST/api/report_requests/:id
+    http://HOST/api/report_requests/1
 ```
 
 > Example Response:
@@ -1114,13 +1068,12 @@ HTTP status code 204
 
 ### HTTP Request
 
-`PUT http://HOST/api/report_requests/:id`
+`PUT http://HOST/api/report_requests/{REPORT_REQUEST_ID}`
 
 ### Query Parameters
 
 Parameter | Required| Type | Description
 --------- | ------- | ---- | -----------
-id | true | int
 report_request | true    | ReportRequestDAO
 
 #### ReportRequestDAO
@@ -1152,9 +1105,9 @@ interval | false | string | supported values: "summation", "hour", "day", "month
 
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
-     -H "x-access-token: TOKEN" \
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
     -X DELETE \
-    http://HOST/api/report_requests/:id
+    http://HOST/api/report_requests/1
 ```
 
 > Example Response:
@@ -1165,13 +1118,7 @@ HTTP status code 204
 
 ### HTTP Request
 
-`DELETE http://HOST/api/report_requests/:id`
-
-### Query Parameters
-
-Parameter | Required| Type | Description
---------- | ------- | ---- | -----------
-id | true | int |
+`DELETE http://HOST/api/report_requests/{REPORT_REQUEST_ID}`
 
 ## Rerun a Specific Report
 
@@ -1179,9 +1126,9 @@ id | true | int |
 
 ```shell
 curl -H "X-Requested-With: XMLHttpRequest" \
-     -H "x-access-token: TOKEN" \
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
     -X POST \
-    http://HOST/api/report_requests/:id/rerun
+    http://HOST/api/report_requests/1/rerun
 ```
 
 > Example Response:
@@ -1192,10 +1139,4 @@ HTTP status code 201
 
 ### HTTP Request
 
-`POST http://HOST/api/report_requests/:id/rerun`
-
-### Query Parameters
-
-Parameter | Required| Type | Description
---------- | ------- | ---- | -----------
-id | true | int |
+`POST http://HOST/api/report_requests/{REPORT_REQUEST_ID}/rerun`
