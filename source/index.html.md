@@ -43,6 +43,7 @@ curl --data "username=USERNAME&password=PASSWORD" \
 
 `POST http://HOST/api/idp/sessions`
 
+
 ### Query Parameters
 
 Parameter | Required | Description
@@ -153,6 +154,9 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 
 `GET http://HOST/api/publishers`
 
+The newly created publisher may not be to be observed immediately via this API.
+For more detail, please check out section "Create a Publisher".
+
 ### Query Parameters
 
 Parameter    | Required | Default | Type |  Description
@@ -211,6 +215,41 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 
 ## Create a Publisher
 
+> Example Request with eager load enabled:
+
+```shell
+# with
+curl -H "X-Requested-With: XMLHttpRequest" \
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
+     -H "Content-Type: application/json" \
+     --data {\"eager_load\":1,\"publisher\":{\"name\":\"createdviaapi-c\",\"username\":\"createdapic\",\"email\":\"api@api.com\",\"state\":\"inactive\",\"cpm_deal\":1,\"currency\":\"USD\",\"country_id\":\"Hong Kong\",\"payment_term_attributes\":{\"pricing_type\":4,\"cpm_price\":2}}} \
+     -X POST \
+     http://HOST/api/publishers
+```
+
+> Example Response(200):
+
+```json
+{
+  "data": {
+    "id": 33,
+    "name": "createdviaapi-d",
+    "state": "inactive",
+    "currency": "USD",
+    "placements_count": 0,
+    "payment_term": {
+      "id": 35,
+      "publisher_id": 33,
+      "pricing_type": "cpm",
+      "cpm_price": 2.0,
+      "revenue_share_rate": null,
+      "revenue_share_rate_percentage": null,
+      "apply_served": false
+    }
+  }
+}
+```
+
 > Example Request:
 
 ```shell
@@ -232,10 +271,14 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 
 `POST http://HOST/api/publishers`
 
+It's an async API, whereby the new record cannot be seen until it gets indexed.
+But if you want to retrieve the record as soon as the API responds, please append `eager_load=1` to your request param.
+
 ### Query Parameters
 
 Parameter | Required| Type | Description
 --------- | ------- | ---- | -----------
+eager_load | false | None | set it to "1" if you prefer 200 response with data rather than plain 201 status code
 publisher | true    | PublisherDAO
 
 #### PublihserDAO
@@ -392,6 +435,9 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 
 `GET http://HOST/api/publishers/{PUBLISHER_ID}/placements`
 
+The newly created placement may not be to be observed immediately via this API.
+For more detail, please check out section "Create a Placement".
+
 ### Query Parameters
 
 Key | Required | Default | Type | Description
@@ -545,6 +591,108 @@ curl -H "X-Requested-With: XMLHttpRequest" \
 
 ## Create a Placement
 
+> Example Request with eager load enabled:
+
+```shell
+# with
+curl -H "X-Requested-With: XMLHttpRequest" \
+     -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
+     -H "Content-Type: application/json" \
+     --data {\"eager_load\":1,\"placement\":{\"name\":\"x_name_1\",\"placement_group_id\":40,\"state\":1,\"media_type\":\"Video\",\"has_reserve_price\":\"1\",\"reserve_cpm\":1.2,\"size\":\"3x3\",\"position\":\"pre_roll\",\"max_duration\":30,\"skippable\":true,\"universal_categories\":\"{ \\"3\\": [57] }\",\"custom_categories\":\"[{\\"prop_id\\":1,\\"name\\":\\"Cat\\",\\"value\\":\\"identical_value\\",\\"disable\\":false}]\",\"custom_tags\":\"[{\\"prop_id\\":1,\\"name\\":\\"Tag\\",\\"value\\":\\"identical_value\\",\\"disable\\":false}]\"}} \
+     -X POST \
+     http://HOST/api/publishers/29/placement_groups/53/placements
+```
+
+> Example Response(200):
+
+```json
+{
+  "data": {
+    "id": "124",
+    "name": "x_name_2",
+    "state": "inactive",
+    "size": null,
+    "media_type": "Video",
+    "universal_categories": {
+      "3": [
+        57
+      ]
+    },
+    "categories_data": [
+      {
+        "id": 3,
+        "name": "Business",
+        "children": [
+          {
+            "id": 57,
+            "name": "Advertising"
+          }
+        ]
+      }
+    ],
+    "placement_group_id": 40,
+    "group_categories_data": [],
+    "ucat_mode": "unknown",
+    "ccat_mode": "unknown",
+    "ctag_mode": "unknown",
+    "position": "pre_roll",
+    "max_duration": "30.0",
+    "skippable": true,
+    "custom_categories": [
+      {
+        "prop_id": 1,
+        "name": "Cat",
+        "value": "identical_value",
+        "disable": false,
+        "children": null
+      }
+    ],
+    "custom_tags": [
+      {
+        "prop_id": 1,
+        "name": "Tag",
+        "value": "identical_value",
+        "disable": false,
+        "children": null
+      }
+    ],
+    "group_custom_categories": [],
+    "group_custom_tags": [],
+    "metrics": {
+      "publisher_state": 0,
+      "impressions": 0,
+      "publisher_revenue": 0.0,
+      "ssp_platform_ecpm": null,
+      "placements_count": 19,
+      "exchange_rate_markup": 0.0,
+      "blank_impressions": 0,
+      "publisher_ecpm": null,
+      "kept_impressions": 0,
+      "resold_impressions": 0,
+      "ssp_platform_profit": 0.0,
+      "fill_rate": null,
+      "publisher_id": 21,
+      "placement_group_id": 40,
+      "trade_logs": 0,
+      "amount": 0.0,
+      "ssp_platform_revenue": 0.0,
+      "default_impressions": 0,
+      "clicks": 0,
+      "created_at": 1498130683000,
+      "ctr": null,
+      "placement_state": 1,
+      "publisher_name": "Name",
+      "seller_revenue_share": 0.0,
+      "requests": 0,
+      "ssp_platform_ecpc": null,
+      "publisher_ecpc": null,
+      "placement_id": 124,
+      "placement_name": "x_name_2"
+    }
+  }
+}
+```
+
 > Example Request:
 
 ```shell
@@ -556,7 +704,7 @@ curl -H "X-Requested-With: XMLHttpRequest" \
      http://HOST/api/publishers/29/placement_groups/53/placements
 ```
 
-> Example Response:
+> Example Response(201):
 
 ```
 HTTP status code 201
@@ -565,10 +713,14 @@ HTTP status code 201
 ### HTTP Request
 `POST http://HOST/api/publishers/{PUBLISHER_ID}/placement_groups/{PLACEMENT_GROUP_ID}/placements`
 
+It's an async API, whereby the new record cannot be seen until it gets indexed.
+But if you want to retrieve the record as soon as the API responds, please append `eager_load=1` to your request param.
+
 ### Query Parameters
 
 Parameter | Required | Default | Description
 --------- | -------- | ------- | -----------
+eager_load | false | None | set it to "1" if you prefer 200 response with data rather than plain 201 status code
 placement | true | None | PlacementDAO
 
 #### PlacementDAO
