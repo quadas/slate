@@ -531,6 +531,7 @@ name | true | None |
 curl -H "X-Requested-With: XMLHttpRequest" \
      -H "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbGF0Zm9ybV9pZCI6IjEyIiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwidG9rZW4iOiIxMDU1M2ZjZTk0ZjE2YmQ5NGJmNWZjZTZjNzJjYTVkOTQwNjY2N2QwNmI0NWQ4OWE0MTc3OGYwMDFlOTA5MWNiIn0.fMZy0m0J6yaTQabbF9LCQmgdV0ujF1wfthCKmELhiIs" \
      -H "Content-Type: application/json" \
+     -X POST \
      --data "{\"placement\":{\"name\":\"another_name\",\"state\":1,\"media_type\":\"Video\",\"has_reserve_price\":\"1\",\"reserve_cpm\":1.2,\"size\":\"3x3\",\"position\":\"pre_roll\",\"max_duration\":30,\"skippable\":true,\"universal_categories\":\"{\\"3\\": [57] }\",\"custom_categories\":\"[{\\"prop_id\\":1,\\"name\\":\\"Cat\\",\\"value\\":\\"identical_value\\",\\"disable\\":false}]\",\"custom_tags\":\"[{\\"prop_id\\":1,\\"name\\":\\"Tag\\",\\"value\\":\\"identical_value\\",\\"disable\\":false}]\"}}" \
      http://HOST/api/publishers/29/placements/1
 ```
@@ -878,7 +879,7 @@ HTTP status code 204
 ```
 
 ### HTTP Request
-`PUT http://HOST/api/publishers/{PUBLISHER_DI}/placement_groups/{PLACEMENT_GROUP_ID_SEPARATED_WITH_COMMA}`
+`POST http://HOST/api/publishers/{PUBLISHER_DI}/placement_groups/{PLACEMENT_GROUP_ID_SEPARATED_WITH_COMMA}`
 
 If you'd like to update multi placement groups simultaneously, replace `{PLACEMENT_GROUP_ID_SEPARATED_WITH_COMMA}` with ids like "1,2,3".
 
