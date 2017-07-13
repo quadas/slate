@@ -936,17 +936,21 @@ Parameter | Required | Default | Description
 file | true | None | csv file, please check out the example below
 
 ### example csv file open via text editor
+
+> Tag example:
+
 ```
-# Tag example
 tag_id,category,value,name,shown
 1,,grandpa,grandpa,true
 2,1,father,father,true
 3,2,me,me,true
 4,3,child,child,true
 5,4,grandchild,grandchild,true
+```
 
+> Category example
 
-# Category example
+```
 category_id,category,value,name,shown
 1,,1-value,1-name,true
 2,1,2-value,2-name,true
