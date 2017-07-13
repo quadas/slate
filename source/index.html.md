@@ -933,30 +933,25 @@ For more detail, check out relevant sections of placment management.
 
 Parameter | Required | Default | Description
 --------- | -------- | ------- | -----------
-file | true | None | yaml file, please check out the example below
+file | true | None | csv file, please check out the example below
 
-### example yaml file
+### example csv file open via text editor
 ```
-- tag_id: 1
-  category: # it could be empty
-  value: "1" # the unique value
-  name: "酒店" # name displayed on console
-  shown: true # visible or not
-- tag_id: 2
-  category:
-  value: "2"
-  name: "机票"
-  shown: true
-- tag_id: 3
-  category:
-  value: "3"
-  name: "火车票"
-  shown: true
-- tag_id: 11
-  category: 1 # it belongs to the record whose id is 1 (酒店)
-  value: "11"
-  name: "酒店_出发地"
-  shown: true
+# Tag example
+tag_id,category,value,name,shown
+1,,grandpa,grandpa,true
+2,1,father,father,true
+3,2,me,me,true
+4,3,child,child,true
+5,4,grandchild,grandchild,true
+
+
+# Category example
+category_id,category,value,name,shown
+1,,1-value,1-name,true
+2,1,2-value,2-name,true
+3,,3-value,3-name,true
+4,1,4-value,4-name,true
 ```
 
 # Reports
