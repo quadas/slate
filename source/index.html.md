@@ -285,7 +285,7 @@ publisher | true    | PublisherDAO
 Key | Required | Type | Description
 --- | ----- | --- | ---
 name | true | string |
-username | true | string |
+username | true | string | unique
 state | true | string | accepted values: active, inactive
 currency | true | string | USD,CNY,JPY,TWD,HKD
 country_id | true | string | valid country id, checkout [country mapping](#country-mappings)
